@@ -29,7 +29,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/user").then(function (response) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+    var email = localStorage.getItem("email");
+    axios.get("/api/user/".concat(email)).then(function (response) {
+      // console.log(response.data);
       _this.user = response.data;
     });
   },
@@ -37,9 +40,11 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this2 = this;
 
-      axios.post("api/logout").then(function (response) {
-        console.log(response);
+      axios.get('api/logout').then(function (response) {
+        // localStorage.removeItem("auth");
+        localStorage.removeItem("token");
         localStorage.removeItem("auth");
+        localStorage.removeItem("email");
 
         _this2.$router.push("/login");
       })["catch"](function (error) {
@@ -102,7 +107,9 @@ __webpack_require__.r(__webpack_exports__);
           email: _this.email,
           password: _this.password
         }).then(function (response) {
-          console.log(response);
+          console.log(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("email", response.data.email);
           localStorage.setItem("auth", "ture");
 
           _this.$router.push("/about");

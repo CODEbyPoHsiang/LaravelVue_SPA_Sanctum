@@ -1862,7 +1862,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/user").then(function (response) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+    var email = localStorage.getItem("email");
+    axios.get("/api/user/".concat(email)).then(function (response) {
+      // console.log(response.data);
       _this.user = response.data;
     });
   },
@@ -1870,9 +1873,11 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this2 = this;
 
-      axios.post("api/logout").then(function (response) {
-        console.log(response);
+      axios.get('api/logout').then(function (response) {
+        // localStorage.removeItem("auth");
+        localStorage.removeItem("token");
         localStorage.removeItem("auth");
+        localStorage.removeItem("email");
 
         _this2.$router.push("/login");
       })["catch"](function (error) {
@@ -1936,7 +1941,9 @@ __webpack_require__.r(__webpack_exports__);
           email: _this.email,
           password: _this.password
         }).then(function (response) {
-          console.log(response);
+          console.log(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("email", response.data.email);
           localStorage.setItem("auth", "ture");
 
           _this.$router.push("/about");
@@ -1999,8 +2006,8 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // window.axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = "http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public";
 /**

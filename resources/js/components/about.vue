@@ -14,17 +14,23 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/user").then(response => {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+        const email =localStorage.getItem("email");
+        axios.get(`/api/user/${email}`).then(response => {
+            // console.log(response.data);
             this.user = response.data;
         });
     },
     methods: {
         logout() {
             axios
-                .post("api/logout")
+                .get('api/logout')
                 .then(response => {
-                    console.log(response);
+
+                    // localStorage.removeItem("auth");
+                    localStorage.removeItem("token");
                     localStorage.removeItem("auth");
+                    localStorage.removeItem("email");
                     this.$router.push("/login");
                 })
                 .catch(error => {

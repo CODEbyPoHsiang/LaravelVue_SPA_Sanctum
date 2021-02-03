@@ -41,7 +41,9 @@ export default {
                         password: this.password
                     })
                     .then(response => {
-                        console.log(response);
+                        console.log(response.data.token);
+                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("email", response.data.email);
                         localStorage.setItem("auth", "ture");
                         this.$router.push("/about");
                     })

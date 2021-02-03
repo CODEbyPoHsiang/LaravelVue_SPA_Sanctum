@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // // 定義主key
+    // protected $primaryKey = "email";
+    // // public $name = false;
+    // // 主鍵是否遞增
+    // public $incrementing = false;
+    // // 主鍵型別
+    // protected $keyType = 'string';
 }
