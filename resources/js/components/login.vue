@@ -17,13 +17,16 @@
                 </span>
             </div>
 
-            <button>登入</button>
+            <button>確認登入</button>
+
+            <div class="card-body">
+                component 名稱：login.vue 這裡是登入頁
+            </div>
         </form>
     </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -31,6 +34,9 @@ export default {
             password: "",
             errors: []
         };
+    },
+    mounted() {
+        console.log("這是login.vue");
     },
     methods: {
         login() {
@@ -44,7 +50,8 @@ export default {
                         console.log(response.data.token);
                         localStorage.setItem("token", response.data.token);
                         localStorage.setItem("email", response.data.email);
-                        localStorage.setItem("auth", "ture");
+                        localStorage.setItem("auth", "true");
+                        this.$emit("singin", "true");
                         this.$router.push("/about");
                     })
                     .catch(error => {

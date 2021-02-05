@@ -10,7 +10,7 @@
  
 <body>
     <div id="app">
-        <router-view />
+       <app></app>
     </div>
 </body>
  

@@ -14,8 +14,9 @@ export default {
         };
     },
     mounted() {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
-        const email =localStorage.getItem("email");
+        axios.defaults.headers.common["Authorization"] =
+            "Bearer " + localStorage.getItem("token");
+        const email = localStorage.getItem("email");
         axios.get(`/api/user/${email}`).then(response => {
             // console.log(response.data);
             this.user = response.data;
@@ -24,13 +25,13 @@ export default {
     methods: {
         logout() {
             axios
-                .get('api/logout')
+                .post("api/logout")
                 .then(response => {
-
                     // localStorage.removeItem("auth");
                     localStorage.removeItem("token");
                     localStorage.removeItem("auth");
                     localStorage.removeItem("email");
+                    this.$emit("singin", "false");
                     this.$router.push("/login");
                 })
                 .catch(error => {
