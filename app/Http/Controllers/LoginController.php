@@ -19,13 +19,33 @@ class LoginController extends Controller
         //     'password' => 'required'
         // ]);
 
-        // if (Auth::attempt($credentials)) {
-        //     $data = Auth::user();
-        //     return response()->json(['data'=>$data,'message' => 'Login successful'], 200);
-        // }
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required'
+        ];
 
+        $messages = [
+            //驗證未通過的訊息提示
+            'email.required' => '信箱為必填欄位',
+            'password.required' => '密碼不得為空白',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            $errors = $messages->all();
+            $response = [
+            'success' => false,
+            'data' => "Error",
+            'message' => $errors[0],
+        ];
+            return response()->json($response, 202);
+        }
+ 
+   
+ 
         // throw ValidationException::withMessages([
-        //     'email' => ['The provided credentials are incorrect'],
+        //     'email' => ['輸入的email信箱不正確'],
         // ]);
 
         $user = User::where('name', $request->name)->orWhere('email', $request->email)->first();
