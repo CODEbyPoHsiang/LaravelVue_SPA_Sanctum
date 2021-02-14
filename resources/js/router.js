@@ -14,6 +14,7 @@ Vue.use(VueRouter);
 import login from "./components/login.vue";
 import about from "./components/about.vue";
 import home from "./components/home.vue";
+import register from "./components/register.vue";
 
 
 //組件切換
@@ -38,6 +39,11 @@ const router = new VueRouter({
       path: "/home",
       name: "home",
       component: home,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: register,
     },
     {
       path: "/about",

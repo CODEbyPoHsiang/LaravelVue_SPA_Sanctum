@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user/{email}', 'LoginController@user');
 
 Route::post('/login', 'LoginController@login');
+Route::post('/register', 'RegisterController@register');
 Route::post('/logout', 'LoginController@logout');
 
 

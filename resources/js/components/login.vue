@@ -73,7 +73,6 @@ export default {
       axios
         .post("api/logout")
         .then((response) => {
-          // localStorage.removeItem("auth");
           localStorage.removeItem("token");
           localStorage.removeItem("auth");
           localStorage.removeItem("email");
