@@ -5,6 +5,10 @@
       <div class="col-md-6">
         <form @submit.prevent="updateProduct">
           <div class="form-group">
+            <label>編號</label>
+           {{ product.id }}
+          </div>
+          <div class="form-group">
             <label>品名</label>
             <input type="text" class="form-control" v-model="product.name" />
           </div>
@@ -24,11 +28,12 @@ export default {
   data() {
     return {
       product: {},
-    };
+          };
   },
   created() {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.get(`api/products/${this.$route.params.id}`).then((res) => {
+      axios.get(`api/products/${this.$route.query.id}`).then((res) => {
+        console.log(res);
         this.product = res.data;
       });
     });
@@ -37,9 +42,18 @@ export default {
     updateProduct() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .patch(`api/products/${this.$route.params.id}`, this.product)
-          .then((res) => {
+          .patch(`api/products/${this.$route.query.id}`, this.product)
+          .then((response) => {
+
+             if (response.request.status === 200) {
             this.$router.push({ name: "allproduct" });
+             }else{
+                             alert(response.data.message);
+
+             }
+          })
+           .catch((error) => {
+            this.errors = error.response.data.errors;
           });
       });
     },

@@ -59,7 +59,7 @@ const router = new VueRouter({
     },
     {
       path: "/editproduct",
-      name: "editproduct",
+      name: "EditProduct",
       component: EditProduct,
       meta: { authOnly: true },
     },

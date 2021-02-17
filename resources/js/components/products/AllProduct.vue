@@ -24,7 +24,7 @@
           <td colspan="2">
             <div class="btn-group" role="group">
               <router-link
-                :to="{ name: 'editproduct', params: { id: product.id } }"
+                :to="{ path: '/editproduct', query: { id: product.id } }"
                 class="btn btn-primary"
                 >編輯</router-link
               >&nbsp;&nbsp;
@@ -56,13 +56,16 @@ export default {
   },
   methods: {
     deleteProduct(id) {
-      axios.get("/sanctum/csrf-cookie").then((response) => {
+      let yes = confirm(`你確定刪除編號【${id}】的產品嗎？`);
+      if (yes) {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
         console.log(response.config.headers.Authorization),
-          axios.delete(`api/products/${id}`).then((response) => {
+        axios.delete(`api/products/${id}`).then((response) => {
             let i = this.products.map((data) => data.id).indexOf(id);
             this.products.splice(i, 1);
           });
       });
+      }
     },
   },
 };

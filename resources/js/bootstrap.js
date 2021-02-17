@@ -26,6 +26,12 @@ window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = process.env.MIX_BASE_SANCTUM_URL;
 
+
+//防止手動修改storage 內容
+window.addEventListener('storage', (e) => {
+    localStorage.setItem(e.key, e.oldValue) //重新赋值修改前的值
+  })
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
