@@ -64,6 +64,7 @@ export default {
           localStorage.removeItem("token");
           localStorage.removeItem("auth");
           localStorage.removeItem("email");
+           document.cookie = `token=`;  
           this.isLoggedIn = "false";
           this.$router.push("/login");
         })
@@ -71,9 +72,28 @@ export default {
           console.log(error);
         });
     },
+ 
     singin(para) {
       this.isLoggedIn = para;
     },
+    handleStorageChange () {
+      // axios.post(`/api/remove_password/${localStorage.getItem("email")}`).then((response) => {
+      // console.log(response.data);
+      localStorage.clear();
+      this.isLoggedIn = "false";
+      this.$router.push('/login');    
+    // });
+    },
   },
+   ready () {
+    window.addEventListener('storage', this.handleStorageChange);
+  },
+  beforeDestroy () {
+    window.removeEventListener('storage', this.handleStorageChange);
+  },
+  mounted () {
+    window.addEventListener('storage', this.handleStorageChange);
+  }
+
 };
 </script>

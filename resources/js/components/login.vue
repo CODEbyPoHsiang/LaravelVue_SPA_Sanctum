@@ -51,9 +51,11 @@ export default {
           .then((response) => {
             // console.log(response);
             if (response.request.status === 200) {
+
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("email", response.data.email);
               localStorage.setItem("auth", "true");
+              document.cookie = `token = ${response.data.token}`;   
               this.$emit("singin", "true");
               this.$router.push("/about");
               // return this.$router.push("/login");
@@ -63,9 +65,6 @@ export default {
 
             // console.log(response.request.status);
             // console.log(response.data.token);
-          })
-          .catch((error) => {
-            this.errors = error.response.data.errors;
           });
       });
     },
@@ -76,6 +75,7 @@ export default {
           localStorage.removeItem("token");
           localStorage.removeItem("auth");
           localStorage.removeItem("email");
+          document.cookie = `token = `;   
           this.$emit("singin", "false");
           this.$router.push("/login");
         })

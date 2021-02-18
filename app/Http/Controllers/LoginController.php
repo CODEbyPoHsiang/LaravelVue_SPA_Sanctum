@@ -50,6 +50,14 @@ class LoginController extends Controller
 
         $user = User::where('name', $request->name)->orWhere('email', $request->email)->first();
 
+        if ($user->password =="") {
+            $response = [
+                'success' => false,
+                'message' => '您輸入的帳號密碼不存在，請洽管理員處理',
+              ];
+            return response()->json($response, 202);
+        }
+
         //檢查帳號密碼有無錯誤
         if (!$user || !Hash::check($request->password, $user->password)) {
             $response = [
@@ -75,6 +83,11 @@ class LoginController extends Controller
     {
         $user = User::where('email', '=', $email)->first();
         return response($user);
+    }
+
+    public function remove_password($email)
+    {
+        return User::where('email', '=', $email)->update(["password"=>""]);
     }
 
     public function logout()

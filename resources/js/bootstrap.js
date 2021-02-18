@@ -27,10 +27,12 @@ window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = process.env.MIX_BASE_SANCTUM_URL;
 
 
-//防止手動修改storage 內容
-window.addEventListener('storage', (e) => {
-    localStorage.setItem(e.key, e.oldValue) //重新赋值修改前的值
-  })
+// //防止手動修改storage 內容
+// window.addEventListener('storage', (e) => {
+//     // localStorage.setItem(e.key, e.oldValue) //重新赋值修改前的值
+//     localStorage.clear();
+//     window.location.replace("/#/login");
+//   })
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
