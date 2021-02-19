@@ -5,7 +5,10 @@ window.Vue = require("vue");
 import Vue from "vue";
 import router from "./router";
 import App from './App.vue';
-import Cookies from 'js-cookie'; 
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
 
 
  

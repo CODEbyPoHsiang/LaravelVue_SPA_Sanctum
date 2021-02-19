@@ -1,19 +1,26 @@
 <template>
-  <div>
-    <h3 class="text-center">建立產品</h3>
-    <div class="row">
+   <div class="container">
+    <div class="row justify-content-center">
       <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">建立產品</div>
+          <div class="card-body">component 名稱： CreateProduct.vue</div>
+          <div class="card-body">
+        <center>
         <form @submit.prevent="addProduct">
-          <div class="form-group">
+          <div >
             <label>品名</label>
-            <input type="text" class="form-control" v-model="product.name" />
+            <input type="text"  v-model="product.name" />
           </div>
-          <div class="form-group">
+          <div >
             <label>價格</label>
-            <input type="text" class="form-control" v-model="product.detail" />
+            <input type="text" v-model="product.detail" />
           </div>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary">新增</button>
         </form>
+        </center>
+          </div>
+        </div>
       </div>
     </div>
   </div>

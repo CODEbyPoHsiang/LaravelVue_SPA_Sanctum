@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <form>
+ <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">登入</div>
+
+          <div class="card-body">component 名稱：login.vue 這裡是登入頁</div>
+          <div class="card-body">
+
+                         <center>
+<form>
       <div>
         <label>信箱</label>
         <input type="text" v-model="email" />
@@ -19,27 +28,31 @@
 
       <!-- <button>確認登入</button> -->
       <button type="submit" class="btn btn-primary" @click="login">
-        確認登入
+        登入
       </button>
 
-      <div class="card-body">component 名稱：login.vue 這裡是登入頁</div>
-    </form>
+    </form></center>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</template>
 
+
+
+ 
+</template>
+ 
 <script>
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-      errors: [],
-    };
-  },
-  mounted() {
-    console.log("這是login.vue");
-  },
-  methods: {
+    data() {
+        return {
+            email: "",
+            password: "",
+            errors: []
+        };
+    },
+    methods: {
     login(e) {
       e.preventDefault();
       axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -83,6 +96,9 @@ export default {
           console.log(error);
         });
     },
+  },
+      mounted() {
+    console.log("這是login.vue");
   },
 };
 </script>

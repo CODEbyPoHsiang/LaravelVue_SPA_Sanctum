@@ -1,5 +1,37 @@
 <template>
-  <div>
+ <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">編輯產品</div>
+
+          <div class="card-body">component 名稱：EditProduct.vue </div>
+          <div class="card-body">
+        <center>
+        <form @submit.prevent="updateProduct">
+                    <div>
+            <label>品名</label>
+            <input type="text"  v-model="product.name" />
+            </div>
+          <div >
+
+            <label>價格</label>
+            <input type="text"  v-model="product.detail" />
+                                  </div >
+
+          <button type="submit" class="btn btn-primary">編輯</button>
+        </form>
+        </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</template>
+
+<div>
     <h3 class="text-center">編輯產品</h3>
     <div class="row">
       <div class="col-md-6">
@@ -21,7 +53,6 @@
       </div>
     </div>
   </div>
-</template>
 
 <script>
 export default {

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">首頁設測區</div>
+          <div class="card-header">首頁</div>
 
           <div class="card-body">component 名稱：home.vue 這裡是首頁</div>
         </div>

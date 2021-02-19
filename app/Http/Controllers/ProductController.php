@@ -70,4 +70,10 @@ class ProductController extends Controller
 
         return response()->json('Product deleted!');
     }
+
+    public function serach(Request $request)
+    {
+        $data = Product::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+        return response()->json($data);
+    }
 }

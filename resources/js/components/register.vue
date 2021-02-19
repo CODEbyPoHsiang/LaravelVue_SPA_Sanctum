@@ -1,15 +1,23 @@
 <template>
-  <div>
-    <form>
+  <div class="container">
+
+ <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">註冊</div>
+          <div class="card-body">component 名稱：register.vue 這裡註冊頁</div>
+          <div class="card-body">
+             <center>
+            <form> 
       <div>
-        <label>帳號</label>
+        <label>使用者帳號  </label>
         <input type="text" v-model="name" />
         <span v-if="errors.name">
           {{ errors.name[0] }}
         </span>
       </div>
       <div>
-        <label>信箱</label>
+        <label>使用者信箱 </label>
         <input type="text" v-model="email" />
         <span v-if="errors.email">
           {{ errors.email[0] }}
@@ -17,31 +25,37 @@
       </div>
 
       <div>
-        <label>密碼</label>
+        <label>使用者密碼  </label>
         <input type="password" v-model="password" />
         <span v-if="errors.password">
           {{ errors.password[0] }}
         </span>
       </div>
 
-      <div>
-        <label>再次確認密碼</label>
+     <div>
+        <label>確認密碼</label>
         <input type="password" v-model="password_confirmation" />
         <span v-if="errors.password_confirmation">
           {{ errors.password_confirmation[0] }}
         </span>
       </div>
+     
 
       <!-- <button>確認登入</button> -->
-      <button type="submit" class="btn btn-primary" @click="register">
-        確認新增
-      </button>
+       <center><button type="submit" class="btn btn-primary" @click="register">
+        新增帳號
+      </button></center>
 
-      <div class="card-body">component 名稱：register.vue 這裡是註冊頁</div>
-    </form>
-  </div>
+    </form> </center>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
 </template>
 
+ 
 <script>
 export default {
   data() {
