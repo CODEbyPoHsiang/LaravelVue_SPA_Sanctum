@@ -16,10 +16,36 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            //填入須符合的格式及長度
+            'name' => 'required',
+            'detail' => 'required|numeric',
+     
+        ];
+        $messages = [
+            //驗證未通過的訊息提示
+            'name.required' => '品名為必填欄位',
+            'detail.required' => '價格欄位不得為空',
+            'detail.numeric' => '填入格式應為【數字】',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            $errors = $messages->all();
+            $response = [
+                'success' => false,
+                'data' => "Error",
+                'message' => $errors[0],
+            ];
+            return response()->json($response, 202);
+        }
+
+
         $product = new Product([
             'name' => $request->input('name'),
             'detail' => $request->input('detail')
         ]);
+       
         $product->save();
 
         return response()->json('Product created!');

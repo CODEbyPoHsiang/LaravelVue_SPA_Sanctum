@@ -38,7 +38,15 @@ export default {
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
           .post("api/products", this.product)
-          .then((response) => this.$router.push({ name: "allproduct" }))
+          .then((response) => {
+
+             if (response.request.status === 200) {
+            this.$router.push({ name: "allproduct" });
+             }else{
+                             alert(response.data.message);
+
+             }
+          })
           .catch((err) => console.log(err))
           .finally(() => (this.loading = false));
       });
