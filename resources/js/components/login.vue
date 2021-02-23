@@ -62,22 +62,56 @@ export default {
             password: this.password,
           })
           .then((response) => {
-            // console.log(response);
-            if (response.request.status === 200) {
+            console.log(response);
 
-              localStorage.setItem("token", response.data.token);
-              localStorage.setItem("email", response.data.email);
-              localStorage.setItem("auth", "true");
-              document.cookie = `token = ${response.data.token}`;   
-              this.$emit("singin", "true");
-              this.$router.push("/about");
-              // return this.$router.push("/login");
-            } else {
-              alert(response.data.message);
+            switch(response.data.success){
+              case "getcode":
+                  localStorage.setItem("qrcode", response.data.QR_code);
+                  // localStorage.setItem("email", response.data.email);
+                  localStorage.setItem("first_login", "true");
+                  localStorage.setItem("qrcode_scan", "true");
+                  // document.cookie = `token = ${response.data.token}`;   
+                  // this.$emit("singin", "true");
+                  this.$router.push("/qrcode");
+                  break;
+              case "toConfirmTwoFa":
+                  localStorage.setItem("first_login", "true");
+                  localStorage.setItem("otp2fa", "true");
+                  // document.cookie = `token = ${response.data.token}`;   
+                  // this.$emit("singin", "true");
+                  this.$router.push("/otp2fa");
+                  break;
+              case false:
+                  alert(response.data.message);
+                  break;
             }
 
-            // console.log(response.request.status);
-            // console.log(response.data.token);
+
+            // if (response.data.success === "getcode") {
+            //   localStorage.setItem("qrcode", response.data.QR_code);
+            //   // localStorage.setItem("email", response.data.email);
+            //   localStorage.setItem("auth", "true");
+            //   localStorage.setItem("qrcode_scan", "true");
+            //   // document.cookie = `token = ${response.data.token}`;   
+            //   // this.$emit("singin", "true");
+            //   this.$router.push("/qrcode");
+            //   // return this.$router.push("/login");
+            // } 
+            //  if (response.data.success === "toConfirmTwoFa") {
+            //   // localStorage.setItem("qrcode", response.data.QR_code);
+            //   // localStorage.setItem("email", response.data.email);
+            //   localStorage.setItem("auth", "true");
+            //   localStorage.setItem("otp2fa", "true");
+            //   // document.cookie = `token = ${response.data.token}`;   
+            //   // this.$emit("singin", "true");
+            //   this.$router.push("/otp2fa");
+            //   // return this.$router.push("/login");
+            // } 
+            // else {
+            //   alert(response.data.message);
+            // }
+            // // console.log(response.request.status);
+            // // console.log(response.data.token);
           });
       });
     },

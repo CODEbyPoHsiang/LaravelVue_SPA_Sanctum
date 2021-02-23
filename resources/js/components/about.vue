@@ -9,7 +9,7 @@
             <div>
     <p>使用者名稱：{{ user.name }}</p>
     <p>使用者信箱：{{ user.email }}</p>
-    <button type="button" class="btn btn-danger" @click="logout">登出</button>
+    <!-- <button type="button" class="btn btn-danger" @click="logout">登出</button> -->
   </div>
           </div>
         </div>

@@ -16,11 +16,11 @@
           <router-link to="/createproduct" class="nav-item nav-link"
             >建立產品</router-link
           >
-
           <router-link to="/about" class="nav-item nav-link"
             >使用者資料</router-link
           >
-          <button type="button" @click="logout">登出</button>
+
+          <button type="button" @click="logout" class="btn btn-danger pull-right">登出</button>
         </div>
         <!-- for non-logged user-->
         <div class="navbar-nav" v-else>
@@ -58,6 +58,8 @@ export default {
         .post("api/logout")
         .then((response) => {
           // localStorage.removeItem("auth");
+              localStorage.removeItem("qrcode");
+              localStorage.removeItem("google2fa_secrect");
           localStorage.removeItem("token");
           localStorage.removeItem("auth");
           localStorage.removeItem("email");
@@ -94,3 +96,4 @@ export default {
 
 };
 </script>
+

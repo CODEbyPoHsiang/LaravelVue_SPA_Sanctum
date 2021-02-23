@@ -7,12 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Google2FA;
+use Carbon\Carbon;
+
+
 
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login_old(Request $request)
     {
         // $credentials = $request->validate([
         //     'email' => 'required|email',
@@ -41,12 +45,6 @@ class LoginController extends Controller
         ];
             return response()->json($response, 202);
         }
- 
-   
- 
-        // throw ValidationException::withMessages([
-        //     'email' => ['輸入的email信箱不正確'],
-        // ]);
 
         $user = User::where('name', $request->name)->orWhere('email', $request->email)->first();
 
@@ -78,6 +76,58 @@ class LoginController extends Controller
           ];
         return response()->json($response, 200);
     }
+    
+    public function login(Request $request)
+    {
+        $user = User::where('name', $request->name)->orWhere('email', $request->email)->first();
+
+        //檢查帳號密碼有無錯誤
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            $response = [
+            'success' => false,
+            'message' => '您輸入的帳號密碼有錯誤或不存在，請重新輸入',
+          ];
+            return response()->json($response, 202);
+        }
+
+        // 刪除掉之前留存的login-token(舊)資料
+        $user->tokens()->where('name', '=', 'login-token')->delete();
+        // 如果登入者未設置二次驗證，則執行獲取google二次驗證key及掃QR_CODE
+        if ($user["google2fa_enable"] == "") {
+            //再產生新的key及QR碼
+            $google2fa = app('pragmarx.google2fa');
+            $user["google2fa_secret"] =  ($google2fa->generateSecretKey(32));
+            $user->save();
+            //生成QR code
+            $QR_Image = $google2fa->getQRCodeInline(
+            // config('app.name'),
+                $user['email'],
+                "TestMonitor",
+                $user['google2fa_secret'],
+            );
+            //  dd($QR_Image);
+            $response = [
+            'success' => 'getcode',
+            'google2fa_secret' => $user["google2fa_secret"],
+            'QR_status' => false,
+            'QR_code' => $QR_Image,
+            'message' => '請掃描QR碼，並執行二次驗證操作',
+            ];
+            return response()->json($response, 200);
+        } else {
+            // login_time 用來記錄登入時間
+            // $user->login_time = Carbon::now();
+            // $user->save();
+            $response = [
+            'success' => 'toConfirmTwoFa',
+            'QR_status' => true,
+            'user' => $user,
+            'message' => '帳號密碼登入成功，請執行二次驗證操作',
+          ];
+            return response()->json($response, 200);
+        }
+    }
+
 
     public function user($email)
     {

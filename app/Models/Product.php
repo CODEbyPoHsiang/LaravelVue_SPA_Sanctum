@@ -10,10 +10,13 @@ class Product extends Model
 {
     use HasFactory,HasApiTokens;
 
-    protected $fillable = [
-        'name',
-        'detail'
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'detail'
+    // ];
+
+    protected $guarded = [];
+
 
     protected function serializeDate(\DateTimeInterface $date)
     {

@@ -21,8 +21,10 @@ import register from "./components/register.vue";
 import AllProduct from "./components/products/AllProduct.vue";
 import EditProduct from "./components/products/EditProduct.vue";
 import CreateProduct from "./components/products/CreateProduct.vue";
+import QRcode from "./components/2fa_login/QRcode.vue";
+import otp2fa from "./components/2fa_login/otp2fa.vue";
 
-// import app from "./App.vue";
+import app from "./App.vue";
 
 const router = new VueRouter({
   // mode: "history",
@@ -69,11 +71,35 @@ const router = new VueRouter({
       component: CreateProduct,
       meta: { authOnly: true },
     },
+    {
+      path: "/createproduct",
+      name: "createproduct",
+      component: CreateProduct,
+      meta: { authOnly: true },
+    },
+    {
+      path: "/qrcode",
+      name: "qrcode",
+      component: QRcode,
+      meta: { authOnly: true },
+    },
+    {
+      path: "/otp2fa",
+      name: "otp2fa",
+      component: otp2fa,
+      meta: { authOnly: true },
+    },
   ],
 });
 
 function isLoggedIn() {
-  return localStorage.getItem("auth");
+  return localStorage.getItem("first_login");
+}
+function QRcodeScan() {
+  return localStorage.getItem("qrcode_scan");
+}
+function OTP2fa() {
+  return localStorage.getItem("otp2fa");
 }
 
 router.beforeEach((to, from, next) => {
@@ -85,8 +111,13 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (to.matched.some((record) => record.meta.guestOnly)) {
-    if (isLoggedIn()) {
-      next("/about");
+    if (QRcodeScan()) {
+      next("/qrcode");
+    } else {
+      next();
+    }
+    if (OTP2fa()) {
+      next("/otp2fa");
     } else {
       next();
     }

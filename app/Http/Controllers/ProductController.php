@@ -97,9 +97,17 @@ class ProductController extends Controller
         return response()->json('Product deleted!');
     }
 
-    public function serach(Request $request)
+    public function search(Request $request)
     {
-        $data = Product::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+        $data = Product::where('name', 'LIKE', '%'.$request->keywords.'%')->cursor()->toArray();
+        if (empty($data)) {
+            $response = [
+                'success' => false,
+                'data' => "Error",
+                'message' => "查無資料，請重新操作!",
+            ];
+            return response()->json($response, 202);
+        }
         return response()->json($data);
     }
 }

@@ -2,6 +2,15 @@
  <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
+                <center>
+
+           <input type="text" v-model="keywords"  placeholder="請輸入品名">
+        
+          <button type="submit" class="btn btn-primary" @click="fetch">搜尋</button>
+          <button type="submit" class="btn btn-primary" onClick="history.go()">重新整理</button>
+                          </center>
+                          </br>
+
         <div class="card">
           <div class="card-header">產品清單</div>
 
@@ -9,6 +18,7 @@
           <div class="card-body">
              <table class="table table-bordered">
       <thead>
+       
         <tr>
           <th>ID</th>
           <th>品名</th>
@@ -19,7 +29,13 @@
         </tr>
       </thead>
       <tbody>
+           <!-- <span v-if="errorskeywords"> -->
+        <!-- </span> -->
+ 
+       
+
         <tr v-for="product in products" :key="product.id">
+                    
           <td>{{ product.id }}</td>
           <td>{{ product.name }}</td>
           <td>{{ product.detail }}</td>
@@ -38,13 +54,25 @@
             </div>
           </td>
         </tr>
+
+
       </tbody>
     </table>
+     <!-- <span v-if="errorskeywords">  -->
+<center>
+  <tr>
+  {{ errorskeywords }}
+ </tr>
+</center>
+                        
+<!-- </span> -->
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
 </template>
 
  <div>
@@ -90,7 +118,9 @@
 export default {
   data() {
     return {
+      keywords : null,
       products: [],
+      errorskeywords :"",
     };
   },
   created() {
@@ -114,6 +144,37 @@ export default {
       });
       }
     },
-  },
+    fetch() {
+              axios.get("/sanctum/csrf-cookie").then((response) => {
+
+            axios.post('/api/search', {
+            keywords: this.keywords,
+          })
+
+                .then((response) => {
+            // console.log(response);
+            if (response.request.status === 200) {
+                           this.products = response.data;
+                                           this.errorskeywords = '';
+
+
+            } else {
+              this.products = [],
+                this.errorskeywords = response.data.message;
+            }
+
+            // console.log(response.request.status);
+            // console.log(response.data.token);
+          });
+          });
+    }
+        
+    // reset() {
+    //         axios.get('/api/products')
+    //             .then(response => this.products = response.data)
+    //             .catch(error => {});
+    //     },
+  
+},
 };
 </script>
