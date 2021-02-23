@@ -109,6 +109,7 @@ class LoginController extends Controller
             $response = [
             'success' => 'getcode',
             'google2fa_secret' => $user["google2fa_secret"],
+            'email' => $user["email"],
             'QR_status' => false,
             'QR_code' => $QR_Image,
             'message' => '請掃描QR碼，並執行二次驗證操作',
@@ -120,6 +121,8 @@ class LoginController extends Controller
             // $user->save();
             $response = [
             'success' => 'toConfirmTwoFa',
+            'google2fa_secret' => $user["google2fa_secret"],
+            'email' => $user["email"],
             'QR_status' => true,
             'user' => $user,
             'message' => '帳號密碼登入成功，請執行二次驗證操作',

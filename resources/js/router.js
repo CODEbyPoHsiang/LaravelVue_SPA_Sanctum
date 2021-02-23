@@ -5,17 +5,16 @@ import axios from "axios";
 const originalPush = VueRouter.prototype.push;
 
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch((err) => err);
+    return originalPush.call(this, location).catch(err => err);
 };
 
 Vue.use(VueRouter);
 
 //切換頁面
-import login from "./components/login.vue";
-import about from "./components/about.vue";
-import home from "./components/home.vue";
-import register from "./components/register.vue";
-
+import Login from "./components/Login.vue";
+import UserAbout from "./components/UserAbout.vue";
+import Home from "./components/Home.vue";
+import Register from "./components/Register.vue";
 
 //組件切換
 import AllProduct from "./components/products/AllProduct.vue";
@@ -27,103 +26,95 @@ import otp2fa from "./components/2fa_login/otp2fa.vue";
 import app from "./App.vue";
 
 const router = new VueRouter({
-  // mode: "history",
-  // base: process.env.MIX_BASE_URL,
-  routes: [
-    {
-      path: "/login",
-      name: "login",
-      component: login,
-      meta: { guestOnly: true },
-    },
+    // mode: "history",
+    // base: process.env.MIX_BASE_URL,
+    routes: [
+        {
+            path: "/login",
+            name: "login",
+            component: Login,
+            meta: { guestOnly: true }
+        },
 
-    {
-      path: "/home",
-      name: "home",
-      component: home,
-    },
-    {
-      path: "/register",
-      name: "register",
-      component: register,
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: about,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/allproduct",
-      name: "allproduct",
-      component: AllProduct,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/editproduct",
-      name: "EditProduct",
-      component: EditProduct,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/createproduct",
-      name: "createproduct",
-      component: CreateProduct,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/createproduct",
-      name: "createproduct",
-      component: CreateProduct,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/qrcode",
-      name: "qrcode",
-      component: QRcode,
-      meta: { authOnly: true },
-    },
-    {
-      path: "/otp2fa",
-      name: "otp2fa",
-      component: otp2fa,
-      meta: { authOnly: true },
-    },
-  ],
+        {
+            path: "/home",
+            name: "home",
+            component: Home,
+            meta: { guestOnly: true }
+        },
+        {
+            path: "/register",
+            name: "register",
+            component: Register,
+            meta: { guestOnly: true }
+        },
+        {
+            path: "/userabout",
+            name: "userabout",
+            component: UserAbout,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/allproduct",
+            name: "allproduct",
+            component: AllProduct,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/editproduct",
+            name: "editproduct",
+            component: EditProduct,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/createproduct",
+            name: "createproduct",
+            component: CreateProduct,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/qrcode",
+            name: "qrcode",
+            component: QRcode,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/otp2fa",
+            name: "otp2fa",
+            component: otp2fa,
+            meta: { authOnly: true }
+        }
+    ]
 });
 
 function isLoggedIn() {
-  return localStorage.getItem("first_login");
+    return localStorage.getItem("first_login");
 }
 function QRcodeScan() {
-  return localStorage.getItem("qrcode_scan");
+    return localStorage.getItem("qrcode_scan");
 }
 function OTP2fa() {
-  return localStorage.getItem("otp2fa");
+    return localStorage.getItem("otp2fa");
 }
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.authOnly)) {
-    if (!isLoggedIn()) {
-      console.log(isLoggedIn());
-      next("/login");
+    // if (to.matched.some(record => record.meta.authOnly)) {
+    if (isLoggedIn() == "") {
+        next("/login");
     } else {
-      next();
+        next();
     }
-  } else if (to.matched.some((record) => record.meta.guestOnly)) {
+    // }
     if (QRcodeScan()) {
-      next("/qrcode");
+        next("/qrcode");
     } else {
-      next();
+        next();
     }
     if (OTP2fa()) {
-      next("/otp2fa");
+        next("/otp2fa");
     } else {
-      next();
+        next();
     }
-  } else {
-    next();
-  }
 });
 
 export default router;

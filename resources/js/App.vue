@@ -16,17 +16,25 @@
           <router-link to="/createproduct" class="nav-item nav-link"
             >建立產品</router-link
           >
-          <router-link to="/about" class="nav-item nav-link"
+          <router-link to="/userabout" class="nav-item nav-link"
             >使用者資料</router-link
           >
 
-          <button type="button" @click="logout" class="btn btn-danger pull-right">登出</button>
+          <button
+            type="button"
+            @click="logout"
+            class="btn btn-danger pull-right"
+          >
+            登出
+          </button>
         </div>
         <!-- for non-logged user-->
         <div class="navbar-nav" v-else>
           <router-link to="/home" class="nav-item nav-link">Home</router-link>
           <router-link to="/login" class="nav-item nav-link">Login</router-link>
-          <router-link to="/register" class="nav-item nav-link">Register</router-link>
+          <router-link to="/register" class="nav-item nav-link"
+            >Register</router-link
+          >
         </div>
       </div>
     </nav>
@@ -58,12 +66,12 @@ export default {
         .post("api/logout")
         .then((response) => {
           // localStorage.removeItem("auth");
-              localStorage.removeItem("qrcode");
-              localStorage.removeItem("google2fa_secrect");
+          localStorage.removeItem("qrcode");
+          localStorage.removeItem("google2fa_secrect");
           localStorage.removeItem("token");
           localStorage.removeItem("auth");
           localStorage.removeItem("email");
-           document.cookie = `token=`;  
+          document.cookie = `token=`;
           this.isLoggedIn = "false";
           this.$router.push("/login");
         })
@@ -71,29 +79,27 @@ export default {
           console.log(error);
         });
     },
- 
     singin(para) {
       this.isLoggedIn = para;
     },
-    handleStorageChange () {
+    handleStorageChange() {
       // axios.post(`/api/remove_password/${localStorage.getItem("email")}`).then((response) => {
       // console.log(response.data);
       localStorage.clear();
       this.isLoggedIn = "false";
-      this.$router.push('/login');    
-    // });
+      this.$router.push("/login");
+      // });
     },
   },
-   ready () {
-    window.addEventListener('storage', this.handleStorageChange);
+  ready() {
+    window.addEventListener("storage", this.handleStorageChange);
   },
-  beforeDestroy () {
-    window.removeEventListener('storage', this.handleStorageChange);
+  beforeDestroy() {
+    window.removeEventListener("storage", this.handleStorageChange);
   },
-  mounted () {
-    window.addEventListener('storage', this.handleStorageChange);
-  }
-
+  mounted() {
+    window.addEventListener("storage", this.handleStorageChange);
+  },
 };
 </script>
 
