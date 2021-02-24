@@ -96,15 +96,20 @@ function QRcodeScan() {
 function OTP2fa() {
     return localStorage.getItem("otp2fa");
 }
+function Checklogin2FA() {
+    return localStorage.getItem("auth");
+}
 
 router.beforeEach((to, from, next) => {
-    // if (to.matched.some(record => record.meta.authOnly)) {
+    if (to.matched.some(record => record.meta.authOnly)) {
     if (isLoggedIn() == "") {
         next("/login");
     } else {
         next();
     }
-    // }
+    }
+    if (to.matched.some(record => record.meta.guestOnly)) {
+
     if (QRcodeScan()) {
         next("/qrcode");
     } else {
@@ -115,6 +120,12 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
+    if (Checklogin2FA()) {
+        next("/userabout");
+    } else {
+        next();
+    }
+}
 });
 
 export default router;

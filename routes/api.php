@@ -12,6 +12,8 @@ Route::middleware('auth:sanctum')->get('/user/{email}', 'LoginController@user');
 Route::post('/login', 'LoginController@login');
 Route::post('/register', 'RegisterController@register');
 Route::post('/logout', 'LoginController@logout');
+Route::post("/google2fa_login", 'LoginController@checkGoogle2faOTP');
+
 Route::post('/remove_password/{email}', 'LoginController@remove_password');
 
 

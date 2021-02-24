@@ -50,7 +50,7 @@ export default {
   methods: {
     login(e) {
       e.preventDefault();
-      axios.get("/sanctum/csrf-cookie").then((response) => {
+      // axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
           .post("/api/login", {
             email: this.email,
@@ -117,7 +117,7 @@ export default {
             // // console.log(response.request.status);
             // // console.log(response.data.token);
           });
-      });
+      // });
     },
     logout() {
       axios

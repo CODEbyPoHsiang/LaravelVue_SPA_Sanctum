@@ -47,6 +47,7 @@
 export default {
   data() {
     return {
+      email:"",
       isLoggedIn: "false",
     };
   },
@@ -63,14 +64,24 @@ export default {
   methods: {
     logout() {
       axios
-        .post("api/logout")
+        .post("api/logout",{
+            email: localStorage.getItem("email"),
+          })
         .then((response) => {
+          localStorage.clear();
+
+          //登出把寫在表頭的
+          axios.defaults.headers.common["Authorization"] ="" ;
+
+          // localStorage.removeItem("first_login");
+          // localStorage.removeItem("qrcode");
+          // localStorage.removeItem("qrcode_scan");
+          // localStorage.removeItem("otp2fa");
+          // localStorage.removeItem("qrcode");
+          // localStorage.removeItem("google2fa_secret");
+          // localStorage.removeItem("token");
           // localStorage.removeItem("auth");
-          localStorage.removeItem("qrcode");
-          localStorage.removeItem("google2fa_secrect");
-          localStorage.removeItem("token");
-          localStorage.removeItem("auth");
-          localStorage.removeItem("email");
+          // localStorage.removeItem("email");
           document.cookie = `token=`;
           this.isLoggedIn = "false";
           this.$router.push("/login");
@@ -100,6 +111,7 @@ export default {
   mounted() {
     window.addEventListener("storage", this.handleStorageChange);
   },
+ 
 };
 </script>
 
