@@ -93,6 +93,7 @@ export default {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       console.log(response.config.headers.Authorization),
         axios.get("api/products").then((response) => {
+          console.log(response.data);
           this.products = response.data;
         });
     });
@@ -118,7 +119,7 @@ export default {
           })
 
           .then((response) => {
-            // console.log(response);
+            console.log(response.data);
             if (response.request.status === 200) {
               this.products = response.data;
               this.errorskeywords = "";

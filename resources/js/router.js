@@ -24,6 +24,7 @@ import QRcode from "./components/2fa_login/QRcode.vue";
 import otp2fa from "./components/2fa_login/otp2fa.vue";
 import TaipeiUbikeMap from "./components/ubike/TaipeiUbikeMap.vue";
 import TaichungUbikeMap from "./components/ubike/TaichungUbikeMap.vue";
+import TaipeiUbikeMapNow from "./components/ubike/TaipeiUbikeMapNow.vue";
 
 import app from "./App.vue";
 
@@ -96,6 +97,12 @@ const router = new VueRouter({
             path: "/taichungmap",
             name: "taichungmap",
             component: TaichungUbikeMap,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/taichungmapnow",
+            name: "taichungmapnow",
+            component: TaipeiUbikeMapNow,
             meta: { authOnly: true }
         },
     ]

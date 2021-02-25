@@ -74,7 +74,11 @@ class UbikeMap extends Controller
 
         
         // return $record;
-        return $result;
+
+        if ($result == ""){
+            return response("請輸入完整站名或輸入的站名不存在",202);
+        }
+        return response($result,200);
     }
 
     public function taichungubikemap(Request $request)

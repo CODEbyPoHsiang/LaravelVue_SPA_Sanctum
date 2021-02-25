@@ -2,66 +2,76 @@
 <template>
   <div id="app">
     <div class="row no-gutters">
-  <!-- 選擇地區 -->
-  <div class="toolbox col-sm-3 p-2 bg-white">
-    <div class="form-group d-flex">
-      <label for="city" class="col-form-label mr-2 text-right">縣市</label>
-      <div class="flex-fill">
-        <!-- v-model依照選取改變顯示選項 -->
-        <select id="city" class="form-control" v-model="select.city">
-        <!-- 製作下拉選單 -->
-        <!-- 不能直接寫option.value="{{ cityName.districts.name }}" -->
-          <option v-bind:value="city.name" v-bind:key="city.name" v-for="city in cityName">
-            <!-- v-for做其他縣市 -->
-            {{city.name}}
-          </option>
-        </select>
+      <!-- 選擇地區 -->
+      <div class="toolbox col-sm-3 p-2 bg-white">
+        <div class="form-group d-flex">
+          <label for="city" class="col-form-label mr-2 text-right">縣市</label>
+          <div class="flex-fill">
+            <!-- v-model依照選取改變顯示選項 -->
+            <select id="city" class="form-control" v-model="select.city">
+              <!-- 製作下拉選單 -->
+              <!-- 不能直接寫option.value="{{ cityName.districts.name }}" -->
+              <option
+                v-bind:value="city.name"
+                v-bind:key="city.name"
+                v-for="city in cityName"
+              >
+                <!-- v-for做其他縣市 -->
+                {{ city.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group d-flex">
+          <label for="dist" class="col-form-label mr-2 text-right">地區</label>
+          <div class="flex-fill">
+            <select id="dist" class="form-control" v-model="select.dist">
+              <!-- 製作下拉選單 -->
+              <!-- v-bind:簡寫為: -->
+              <option
+                :value="dist.name"
+                :key="dist.name"
+                v-for="dist in cityName.find(
+                  (city) => city.name === select.city
+                ).districts"
+              >
+                {{ dist.name }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group d-flex">
-      <label for="dist" class="col-form-label mr-2 text-right">地區</label>
-      <div class="flex-fill">
-        <select id="dist" class="form-control" v-model="select.dist">
-        <!-- 製作下拉選單 -->
-        <!-- v-bind:簡寫為: -->
-        <option :value="dist.name" :key="dist.name"
-        v-for="dist in cityName.find((city) => city.name === select.city).districts">
-          {{dist.name}}
-        </option>
-        </select>
-      </div>
-    </div>
-    
-  </div>
 
-  <!-- 顯示地圖和 UBike 站點 -->
-  <div class="col-sm-9">
-    <div id="map"></div>
-  </div>
-</div>
+      <!-- 顯示地圖和 UBike 站點 -->
+      <div class="col-sm-9">
+        <div id="map"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import L from 'leaflet'; // OSM不像是google map可以直接標記點位，需要其他套件
-import cityName from './assets/city2Name.json';
+import L from "leaflet"; // OSM不像是google map可以直接標記點位，需要其他套件
+import cityName from "./assets/city2Name.json";
 export default {
-  name: 'App',
+  name: "App",
   data: () => ({
     cityName,
     select: {
-      city: '臺中市',
-      dist: '',
+      city: "臺中市",
+      dist: "",
     },
     ubikes: [],
     OSMap: [],
   }),
-  computed: { // 重新計算ubikes，避免呈現過多markerLayer
+  computed: {
+    // 重新計算ubikes，避免呈現過多markerLayer
     youbikes() {
       return this.ubikes.filter((bike) => bike.sarea === this.select.dist);
     },
   },
-  watch: { // 監聽youbikes是否重新計算過，重新計算時執行addMarkers()方法
+  watch: {
+    // 監聽youbikes是否重新計算過，重新計算時執行addMarkers()方法
     youbikes() {
       this.updateMap();
     },
@@ -83,7 +93,7 @@ export default {
             <p><strong style="font-size:16px;">${bike.ar}</strong></p>
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${bike.sbi} 台</strong><br>
             可停空位剩餘: ${bike.bemp}<br>
-            <small>最後更新時間: ${bike.mday}</small>`,
+            <small>最後更新時間: ${bike.mday}</small>`
           )
           .addTo(this.OSMap); // 新增標記到地圖
       });
@@ -101,18 +111,21 @@ export default {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
     axios.get("api/taichungubikemap").then((response) => {
       console.log(response.data);
-      this.ubikes = Object.keys(response.data.retVal).map((key) => response.data.retVal[key]);
+      this.ubikes = Object.keys(response.data.retVal).map(
+        (key) => response.data.retVal[key]
+      );
     });
   },
   mounted() {
     // initalize
-    this.OSMap = L.map('map', {
-      center: [24.16303,120.64574],
+    this.OSMap = L.map("map", {
+      center: [24.16303, 120.64574],
       zoom: 18,
     });
     // add tile to map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 18,
     }).addTo(this.OSMap);
     // this.setView();
