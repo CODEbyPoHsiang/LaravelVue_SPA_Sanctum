@@ -19,6 +19,12 @@
           <router-link to="/userabout" class="nav-item nav-link"
             >使用者資料</router-link
           >
+          <router-link to="/taipeimap" class="nav-item nav-link"
+            >台北UbikeMap</router-link
+          >
+          <router-link to="/taichungmap" class="nav-item nav-link"
+            >台中UbikeMap</router-link
+          >
 
           <button
             type="button"

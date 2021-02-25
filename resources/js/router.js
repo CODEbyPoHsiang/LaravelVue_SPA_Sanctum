@@ -22,6 +22,8 @@ import EditProduct from "./components/products/EditProduct.vue";
 import CreateProduct from "./components/products/CreateProduct.vue";
 import QRcode from "./components/2fa_login/QRcode.vue";
 import otp2fa from "./components/2fa_login/otp2fa.vue";
+import TaipeiUbikeMap from "./components/ubike/TaipeiUbikeMap.vue";
+import TaichungUbikeMap from "./components/ubike/TaichungUbikeMap.vue";
 
 import app from "./App.vue";
 
@@ -83,7 +85,19 @@ const router = new VueRouter({
             name: "otp2fa",
             component: otp2fa,
             meta: { authOnly: true }
-        }
+        },
+        {
+            path: "/taipeimap",
+            name: "taipeimap",
+            component: TaipeiUbikeMap,
+            meta: { authOnly: true }
+        },
+        {
+            path: "/taichungmap",
+            name: "taichungmap",
+            component: TaichungUbikeMap,
+            meta: { authOnly: true }
+        },
     ]
 });
 

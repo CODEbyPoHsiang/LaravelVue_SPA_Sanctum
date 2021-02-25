@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "js-cookie": "^2.2.1",
-        "vue-router": "^3.5.1"
+        "leaflet": "^1.7.1",
+        "vue-router": "^3.5.1",
+        "vue2-leaflet": "^2.6.0"
     }
 }

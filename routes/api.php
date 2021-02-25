@@ -27,4 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/search', 'ProductController@search');
 });
 
-Route::post('/monitor', 'Police@search');
+Route::get('/taipeiubikemap', 'UbikeMap@taipeiubikemap');
+Route::post('/taipeiubikemap_search', 'UbikeMap@taipeiubikemap_search');
+
+Route::get('/taichungubikemap', 'UbikeMap@taichungubikemap');
