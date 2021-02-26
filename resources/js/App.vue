@@ -6,7 +6,7 @@
       >
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-primary  bg-primary ">
       <div class="collapse navbar-collapse">
         <!-- for logged-in user-->
         <div class="navbar-nav" v-if="isLoggedIn === 'true'">

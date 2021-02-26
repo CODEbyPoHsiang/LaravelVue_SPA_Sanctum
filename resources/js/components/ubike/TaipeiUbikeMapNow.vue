@@ -31,26 +31,18 @@
               <tbody>
                 <!-- <span v-if="errorskeywords"> -->
                 <!-- </span> -->
-                  <tr v-if="ubikes.length > 0">
-                  <tr v-for="ubike in ubikes" :key="ubike.id">
+                  <tr v-for="ubike in ubikes" :key="ubike.sno">
                     <td>{{ ubike.sarea }}</td>
                     <td>{{ ubike.sna }}</td>
                     <td>{{ ubike.sbi }}</td>
                     <td>{{ ubike.bemp }}</td>
                   </tr>
-                </tr>
               </tbody>
             </table>
-            <div class="card-footer"></div>
 
-            <!-- <span v-if="errorskeywords">  -->
+            
             <center>
-              <!-- 查無資料顯示 -->
-              <tr>
-                {{
-                  errorskeywords
-                }}
-              </tr>
+            <span v-if="errorskeywords">{{ errorskeywords}}</span>
             </center>
           </div>
         </div>
@@ -69,33 +61,21 @@ export default {
       errorskeywords: "",
     };
   },
-  watch: {
-    keywords(after, before) {
-      this.search();
-    },
-  },
+  // watch: {
+  //   keywords(after, before) {
+  //     this.search();
+  //   },
+  // },
   created() {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
     axios.get("api/taipeiubikemap").then((response) => {
-      console.log(response.data.retVal);
+      // console.log(response.data.retVal);
       this.ubikes = Object.keys(response.data.retVal).map(
         (key) => response.data.retVal[key]
       );
     });
   },
   methods: {
-    deleteProduct(id) {
-      let yes = confirm(`你確定刪除編號【${id}】的產品嗎？`);
-      if (yes) {
-        axios.get("/sanctum/csrf-cookie").then((response) => {
-          console.log(response.config.headers.Authorization),
-            axios.delete(`api/products/${id}`).then((response) => {
-              let i = this.products.map((data) => data.id).indexOf(id);
-              this.products.splice(i, 1);
-            });
-        });
-      }
-    },
     search() {
       axios
         .post("/api/taipeiubikemap_search", {
@@ -103,11 +83,12 @@ export default {
         })
 
         .then((response) => {
-          // console.log(response);
+          console.log(response.data);
           if (response.request.status === 200) {
             this.ubikes = response.data;
             this.errorskeywords = "";
-          } else {
+          } 
+          if (response.request.status === 202)  {
             this.ubikes = [];
             this.errorskeywords = response.data;
           }

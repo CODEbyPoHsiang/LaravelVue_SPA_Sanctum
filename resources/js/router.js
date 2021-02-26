@@ -25,6 +25,7 @@ import otp2fa from "./components/2fa_login/otp2fa.vue";
 import TaipeiUbikeMap from "./components/ubike/TaipeiUbikeMap.vue";
 import TaichungUbikeMap from "./components/ubike/TaichungUbikeMap.vue";
 import TaipeiUbikeMapNow from "./components/ubike/TaipeiUbikeMapNow.vue";
+import TaichungUbikeMapNow from "./components/ubike/TaichungUbikeMapNow.vue";
 
 import app from "./App.vue";
 
@@ -100,9 +101,15 @@ const router = new VueRouter({
             meta: { authOnly: true }
         },
         {
+            path: "/taipeimapnow",
+            name: "taipeimapnow",
+            component: TaipeiUbikeMapNow,
+            meta: { authOnly: true }
+        },
+        {
             path: "/taichungmapnow",
             name: "taichungmapnow",
-            component: TaipeiUbikeMapNow,
+            component: TaichungUbikeMapNow,
             meta: { authOnly: true }
         },
     ]

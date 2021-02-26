@@ -6,48 +6,64 @@
     "sort": 1,
     "id": 1,
     "name": "南區",
-    "latitude": 24.12833,
-    "longitude": 120.67435,
-    "zipCode": 100
-  },
-  {
-    "sort": 2,
-    "id": 2,
-    "name": "北屯區",
-    "latitude": 24.17173,
-    "longitude":120.68526,
+    "latitude": 24.11343,
+    "longitude": 120.66320,
     "zipCode": 100
   },
   {
     "sort": 2,
     "id": 2,
     "name": "西區",
-    "latitude": 24.1365,
-    "longitude":120.66279,
+    "latitude": 24.1488,
+    "longitude":120.66434,
     "zipCode": 100
   },
   {
-    "sort": 2,
-    "id": 2,
+    "sort": 3,
+    "id": 3,
+    "name": "東區",
+    "latitude": 24.14012,
+    "longitude":120.68933,
+    "zipCode": 100
+  },
+  {
+    "sort": 4,
+    "id": 4,
+    "name": "北區",
+    "latitude": 24.15391,
+    "longitude":120.67446,
+    "zipCode": 100
+  },
+  {
+    "sort": 5,
+    "id": 5,
+    "name": "中區",
+    "latitude": 24.13785,
+    "longitude":120.68337,
+    "zipCode": 100
+  },
+  {
+    "sort": 6,
+    "id": 6,
     "name": "西屯區",
     "latitude": 24.16303,
     "longitude":120.64574,
     "zipCode": 100
   },
   {
-    "sort": 2,
-    "id": 2,
+    "sort": 7,
+    "id": 7,
     "name": "南屯區",
     "latitude": 24.14429,
     "longitude":120.64329,
     "zipCode": 100
   },
   {
-    "sort": 2,
-    "id": 2,
-    "name": "東區",
-    "latitude": 24.14012,
-    "longitude":120.68933,
+    "sort": 8,
+    "id": 8,
+    "name": "北屯區",
+    "latitude": 24.17173,
+    "longitude":120.68526,
     "zipCode": 100
   }]
 }]

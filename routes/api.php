@@ -27,7 +27,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/search', 'ProductController@search');
 });
 
-Route::get('/taipeiubikemap', 'UbikeMap@taipeiubikemap');
-Route::post('/taipeiubikemap_search', 'UbikeMap@taipeiubikemap_search');
 
+//台北ubike相關
+Route::get('/taipeiubikemap', 'UbikeMap@taipeiubikemap');
+//畫面上搜尋的api
+Route::post('/taipeiubikemap_search', 'UbikeMap@taipeiubikemap_search');
+//上一條api得到的列表，畫面上的sno值利用此api取到單一資料，使畫面飛越
+Route::get('/taipeiubikemap_full_match/{keywords}', 'UbikeMap@taipeiubikemap_full_match');
+
+
+//台中ubike相關
 Route::get('/taichungubikemap', 'UbikeMap@taichungubikemap');
+Route::post('/taichungubikemap_search', 'UbikeMap@taichungubikemap_search');
+Route::get('/taichungubikemap_full_match/{keywords}', 'UbikeMap@taichungubikemap_full_match');

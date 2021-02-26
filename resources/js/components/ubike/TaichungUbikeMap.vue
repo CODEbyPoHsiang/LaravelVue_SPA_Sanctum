@@ -3,7 +3,21 @@
   <div id="app">
     <div class="row no-gutters">
       <!-- 選擇地區 -->
-      <div class="toolbox col-sm-3 p-2 bg-white">
+      <div class="toolbox col-sm-3 p-2 bg-dark">
+        <!-- 測試 -->
+        <nav class="navbar navbar-default bg-dark">
+          <span>站點地圖</span>
+            <div>
+              <!-- 即時站點資料 -->
+              <router-link
+                to="/taipeimapnow"
+                type="button"
+                class="btn btn-sm btn-warning  navbar-right"
+                >即時站點資料</router-link
+              >
+              </div>
+        </nav>
+              
         <div class="form-group d-flex">
           <label for="city" class="col-form-label mr-2 text-right">縣市</label>
           <div class="flex-fill">
@@ -23,7 +37,7 @@
           </div>
         </div>
         <div class="form-group d-flex">
-          <label for="dist" class="col-form-label mr-2 text-right">地區</label>
+          <label for="dist" class="col-form-label mr-2 text-right">區域</label>
           <div class="flex-fill">
             <select id="dist" class="form-control" v-model="select.dist">
               <!-- 製作下拉選單 -->
@@ -40,6 +54,62 @@
             </select>
           </div>
         </div>
+        <!-- 搜尋功能 -->
+        <p>站名搜尋</p>
+        <div>
+          <input
+            type="text"
+            v-model="keywords"
+            placeholder="請輸入關鍵字搜尋"
+            class="form-control-lm"
+          />
+          
+          <label>
+            <button
+              type="submit"
+              class="btn btn-primary col-form-label  text-right"
+              @click="search"
+            >
+              搜尋
+            </button>
+          </label>
+
+          <!-- 搜尋結果 -->
+         <div v-if="search_click === 'true'">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header">搜尋結果</div>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>區域</th>
+                        <th>站名</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="search_data in search_datas" :key="search_data.sno">
+                        <td>{{ search_data.sarea }}</td>
+                        <td>{{ search_data.sna }}</td>
+                        <td>
+                          <button
+                              class="btn btn-info"
+                              @click="mapInfo(search_data.sno)"
+                            >
+                              詳細
+                            </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <div class="card-footer"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <br/>
+     
       </div>
 
       <!-- 顯示地圖和 UBike 站點 -->
@@ -59,8 +129,13 @@ export default {
     cityName,
     select: {
       city: "臺中市",
-      dist: "",
+      dist: "西屯區",
     },
+      //search_click 是點擊後改面顯示搜尋結果的效果
+    search_click:"",
+    search_datas: [],
+        keywords: null,
+
     ubikes: [],
     OSMap: [],
   }),
@@ -106,6 +181,43 @@ export default {
         return dist.name === this.select.dist;
       });
     },
+     search() {
+      axios
+        .post("/api/taichungubikemap_search", {
+          keywords: this.keywords,
+        })
+        .then((response) => {
+          this.search_datas = response.data;
+          console.log(response.data);
+          // const sarea = response.data[0].sarea;
+          //  this.response.data[0].find((dist) => {
+          if (response.request.status === 202) {
+            this.search_click = "false";
+            alert(response.data);
+          }
+          if (response.request.status === 200) {
+            this.search_click = "true";
+            this.search_datas = response.data;
+            console.log(this.searh_click);
+          }
+        });
+    },
+       mapInfo(sno){
+      axios.get(`api/taichungubikemap_full_match/${sno}`).then((response) => {
+              console.log(response.data);
+                 this.OSMap.flyTo(
+                new L.LatLng(response.data[0].lat, response.data[0].lng, 14)
+              ); // 飛越效果，數字為過程中縮放級數
+              L.marker([response.data[0].lat, response.data[0].lng])
+                .bindPopup(
+                  `<p><strong style="font-size: 20px;">${response.data[0].sna}</strong></p>
+            <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${response.data[0].sbi} 台</strong><br>
+            可停空位剩餘: ${response.data[0].bemp}<br>
+            <small>最後更新時間: ${response.data[0].mday}</small>`
+                )
+                .addTo(this.OSMap); // 新增標記到地圖
+            });
+    }
   },
   created() {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
@@ -119,7 +231,7 @@ export default {
   mounted() {
     // initalize
     this.OSMap = L.map("map", {
-      center: [24.16303, 120.64574],
+      center: [24.1566, 120.6545],
       zoom: 18,
     });
     // add tile to map

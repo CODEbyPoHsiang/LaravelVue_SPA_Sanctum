@@ -3,9 +3,21 @@
   <div id="app">
     <div class="row no-gutters">
       <!-- 選擇地區 -->
-      <div class="toolbox col-sm-3 p-2 bg-drak">
-        <p>站點地圖</p>
-
+      <div class="toolbox col-sm-3 p-2 bg-dark">
+        <!-- 測試 -->
+        <nav class="navbar navbar-default bg-dark">
+          <span>站點地圖</span>
+            <div>
+              <!-- 即時站點資料 -->
+              <router-link
+                to="/taipeimapnow"
+                type="button"
+                class="btn btn-sm btn-warning  navbar-right"
+                >即時站點資料</router-link
+              >
+              </div>
+        </nav>
+              
         <div class="form-group d-flex">
           <label for="city" class="col-form-label mr-2 text-right">縣市</label>
           <div class="flex-fill">
@@ -48,9 +60,10 @@
           <input
             type="text"
             v-model="keywords"
-            placeholder="請輸入完整站名名稱"
-            class="form-control-xs"
+            placeholder="請輸入關鍵字搜尋"
+            class="form-control-lm"
           />
+          
           <label>
             <button
               type="submit"
@@ -60,19 +73,43 @@
               搜尋
             </button>
           </label>
+
+          <!-- 搜尋結果 -->
+         <div v-if="search_click === 'true'">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header">搜尋結果</div>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>區域</th>
+                        <th>站名</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="search_data in search_datas" :key="search_data.sno">
+                        <td>{{ search_data.sarea }}</td>
+                        <td>{{ search_data.sna }}</td>
+                        <td>
+                          <button
+                              class="btn btn-info"
+                              @click="mapInfo(search_data.sno)"
+                            >
+                              詳細
+                            </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <div class="card-footer"></div>
+              </div>
+            </div>
+          </div>
+          
         </div>
         <br/>
-        <!-- 即時站點資料 -->
-        <div>
-          <center>
-            <router-link
-              to="/taichungmapnow"
-              type="button"
-              class="btn-lg btn-warning btn-rounded"
-              >即時站點資料</router-link
-            >
-          </center>
-        </div>
+     
       </div>
 
       <!-- 顯示地圖和 UBike 站點 -->
@@ -95,8 +132,12 @@ export default {
       dist: "中正區",
     },
     ubikes: [],
-    keywords: null,
+    search_datas: [],
 
+    //search_click 是點擊後改面顯示搜尋結果的效果
+    search_click:"",
+
+    keywords: null,
     OSMap: [],
   }),
   computed: {
@@ -146,16 +187,43 @@ export default {
           keywords: this.keywords,
         })
         .then((response) => {
+          this.search_datas = response.data;
           console.log(response.data);
           // const sarea = response.data[0].sarea;
           //  this.response.data[0].find((dist) => {
           if (response.request.status === 202) {
+            this.search_click = "false";
             alert(response.data);
           }
           if (response.request.status === 200) {
-            if (this.keywords === response.data[0].sna) {
-              // this.OSMap.panTo(new L.LatLng(dist.latitude, dist.longitude)); // 直接平移
-              this.OSMap.flyTo(
+            this.search_click = "true";
+            this.search_datas = response.data;
+            console.log(this.searh_click);
+            //原本從這裡飛越
+            // if (this.keywords === response.data[0].sna) {
+            //   // this.OSMap.panTo(new L.LatLng(dist.latitude, dist.longitude)); // 直接平移
+              
+            //   this.OSMap.flyTo(
+            //     new L.LatLng(response.data[0].lat, response.data[0].lng, 14)
+            //   ); // 飛越效果，數字為過程中縮放級數
+            //   L.marker([response.data[0].lat, response.data[0].lng])
+            //     .bindPopup(
+            //       `<p><strong style="font-size: 20px;">${response.data[0].sna}</strong></p>
+            // <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${response.data[0].sbi} 台</strong><br>
+            // 可停空位剩餘: ${response.data[0].bemp}<br>
+            // <small>最後更新時間: ${response.data[0].mday}</small>`
+            //     )
+            //     .addTo(this.OSMap); // 新增標記到地圖
+            // }
+          }
+          // return dist.name === sarea;
+          // });
+        });
+    },
+    mapInfo(sno){
+      axios.get(`api/taipeiubikemap_full_match/${sno}`).then((response) => {
+              console.log(response.data);
+                 this.OSMap.flyTo(
                 new L.LatLng(response.data[0].lat, response.data[0].lng, 14)
               ); // 飛越效果，數字為過程中縮放級數
               L.marker([response.data[0].lat, response.data[0].lng])
@@ -166,13 +234,8 @@ export default {
             <small>最後更新時間: ${response.data[0].mday}</small>`
                 )
                 .addTo(this.OSMap); // 新增標記到地圖
-            }
-          }
-
-          // return dist.name === sarea;
-          // });
-        });
-    },
+            });
+    }
   },
   created() {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
@@ -205,5 +268,12 @@ export default {
 #map {
   height: 100vh;
   position: relative;
+}
+@media (min-width: 768px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
 }
 </style>
