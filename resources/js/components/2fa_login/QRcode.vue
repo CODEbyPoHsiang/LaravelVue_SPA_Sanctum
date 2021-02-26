@@ -56,15 +56,15 @@ export default {
       e.preventDefault();
       axios
           .post("/api/google2fa_login", {
-           google2fa_secret: localStorage.getItem('google2fa_secret'),
-           email: localStorage.getItem('email'),
+           google2fa_secret: sessionStorage.getItem('google2fa_secret'),
+           email: sessionStorage.getItem('email'),
            one_time_password: this.one_time_password,
           }).then((response) => {
             console.log(response);
             switch (response.data.success) {
               case true:
-                localStorage.setItem("token", response.data.login_token);
-                localStorage.setItem("auth", "true");
+                sessionStorage.setItem("token", response.data.login_token);
+                sessionStorage.setItem("auth", "true");
                 
                 //emit 改變父層navbar元件
                 this.$emit("singin", "true");
@@ -83,12 +83,12 @@ export default {
       // localStorage.removeItem("first_login");
       // localStorage.removeItem("google2fa_secret");
       // localStorage.removeItem("email");
-      localStorage.clear();
+      sessionStorage.clear();
       this.$router.push("/login");
     },
   },
   mounted() {
-    this.qrcode = localStorage.getItem("qrcode");
+    this.qrcode = sessionStorage.getItem("qrcode");
     // localStorage.removeItem("qrcode");
   },
 };

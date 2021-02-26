@@ -135,7 +135,6 @@ export default {
     search_click:"",
     search_datas: [],
         keywords: null,
-
     ubikes: [],
     OSMap: [],
   }),
@@ -203,6 +202,14 @@ export default {
         });
     },
        mapInfo(sno){
+         //因為清單是列表，若點了要在點下一個要先清除
+         // remove markers
+      this.OSMap.eachLayer((layer) => {
+        // 移除先前查詢的標記，避免重複顯示
+        if (layer instanceof L.Marker) {
+          this.OSMap.removeLayer(layer);
+        }
+      });
       axios.get(`api/taichungubikemap_full_match/${sno}`).then((response) => {
               console.log(response.data);
                  this.OSMap.flyTo(

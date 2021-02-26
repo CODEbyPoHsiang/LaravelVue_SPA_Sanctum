@@ -58,7 +58,7 @@ export default {
     };
   },
   created() {
-    if (window.localStorage.getItem("auth") === "true") {
+    if (window.sessionStorage.getItem("auth") === "true") {
       this.isLoggedIn = "true";
     }
   },
@@ -71,10 +71,10 @@ export default {
     logout() {
       axios
         .post("api/logout",{
-            email: localStorage.getItem("email"),
+            email: sessionStorage.getItem("email"),
           })
         .then((response) => {
-          localStorage.clear();
+          sessionStorage.clear();
 
           //登出把寫在表頭的
           axios.defaults.headers.common["Authorization"] ="" ;
@@ -102,7 +102,7 @@ export default {
     handleStorageChange() {
       // axios.post(`/api/remove_password/${localStorage.getItem("email")}`).then((response) => {
       // console.log(response.data);
-      localStorage.clear();
+      sessionStorage.clear();
       this.isLoggedIn = "false";
       this.$router.push("/login");
       // });

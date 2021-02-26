@@ -24,7 +24,7 @@ window.axios.defaults.timeout = 30000;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.defaults.headers.common["Authorization"] =
-    "Bearer " + localStorage.getItem("token");
+    "Bearer " + sessionStorage.getItem("token");
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = process.env.MIX_BASE_SANCTUM_URL;
 

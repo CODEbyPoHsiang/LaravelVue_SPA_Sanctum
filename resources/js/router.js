@@ -116,44 +116,37 @@ const router = new VueRouter({
 });
 
 function isLoggedIn() {
-    return localStorage.getItem("first_login");
+    return sessionStorage.getItem("first_login");
 }
 function QRcodeScan() {
-    return localStorage.getItem("qrcode_scan");
+    return sessionStorage.getItem("qrcode_scan");
 }
 function OTP2fa() {
-    return localStorage.getItem("otp2fa");
+    return sessionStorage.getItem("otp2fa");
 }
 function Checklogin2FA() {
-    return localStorage.getItem("auth");
+    return sessionStorage.getItem("auth");
 }
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.authOnly)) {
-    if (isLoggedIn() == "") {
-        next("/login");
+        if (!isLoggedIn()) {
+            next("/login");
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.guestOnly)) {
+        if (QRcodeScan()) {
+            next("/qrcode");
+        } else if(OTP2fa()){
+            next("/otp2fa");
+        }else {
+            next();
+        }
     } else {
         next();
     }
-    }
-    if (to.matched.some(record => record.meta.guestOnly)) {
-
-    if (QRcodeScan()) {
-        next("/qrcode");
-    } else {
-        next();
-    }
-    if (OTP2fa()) {
-        next("/otp2fa");
-    } else {
-        next();
-    }
-    if (Checklogin2FA()) {
-        next("/userabout");
-    } else {
-        next();
-    }
-}
 });
+
 
 export default router;

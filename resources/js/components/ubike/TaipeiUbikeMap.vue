@@ -133,10 +133,8 @@ export default {
     },
     ubikes: [],
     search_datas: [],
-
     //search_click 是點擊後改面顯示搜尋結果的效果
     search_click:"",
-
     keywords: null,
     OSMap: [],
   }),
@@ -221,6 +219,14 @@ export default {
         });
     },
     mapInfo(sno){
+          //因為清單是列表，若點了要在點下一個要先清除
+         // remove markers
+      this.OSMap.eachLayer((layer) => {
+        // 移除先前查詢的標記，避免重複顯示
+        if (layer instanceof L.Marker) {
+          this.OSMap.removeLayer(layer);
+        }
+      });
       axios.get(`api/taipeiubikemap_full_match/${sno}`).then((response) => {
               console.log(response.data);
                  this.OSMap.flyTo(

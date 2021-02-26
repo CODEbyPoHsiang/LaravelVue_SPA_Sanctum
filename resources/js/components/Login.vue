@@ -61,12 +61,12 @@ export default {
 
             switch (response.data.success) {
               case "getcode":
-                localStorage.setItem("qrcode", response.data.QR_code);
+                sessionStorage.setItem("qrcode", response.data.QR_code);
                 // localStorage.setItem("email", response.data.email);
-                localStorage.setItem("first_login", "true");
-                localStorage.setItem("qrcode_scan", "true");
-                localStorage.setItem("email", response.data.email);
-                localStorage.setItem(
+                sessionStorage.setItem("first_login", "true");
+                sessionStorage.setItem("qrcode_scan", "true");
+                sessionStorage.setItem("email", response.data.email);
+                sessionStorage.setItem(
                   "google2fa_secret",
                   response.data.google2fa_secret
                 );
@@ -75,10 +75,10 @@ export default {
                 this.$router.push("/qrcode");
                 break;
               case "toConfirmTwoFa":
-                localStorage.setItem("first_login", "true");
-                localStorage.setItem("otp2fa", "true");
-                localStorage.setItem("email", response.data.email);
-                localStorage.setItem(
+                sessionStorage.setItem("first_login", "true");
+                sessionStorage.setItem("otp2fa", "true");
+                sessionStorage.setItem("email", response.data.email);
+                sessionStorage.setItem(
                   "google2fa_secret",
                   response.data.google2fa_secret
                 );
@@ -123,10 +123,10 @@ export default {
       axios
         .post("api/logout")
         .then((response) => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("auth");
-          localStorage.removeItem("email");
-          document.cookie = `token = `;
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("auth");
+          sessionStorage.removeItem("email");
+          // document.cookie = `token = `;
           this.$emit("singin", "false");
           this.$router.push("/login");
         })
