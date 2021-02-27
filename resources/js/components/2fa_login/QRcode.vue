@@ -5,6 +5,7 @@
         <div class="card">
           <div class="card-header">QRcode</div>
           <center>
+            //qr_code取出時是html標籤要把他利用v-html綁定
             <div v-html="qrcode"></div>
             <div class="card-body">component 名稱：home.vue 這裡是QRcode</div>
             <div>請輸入OTP 六位數字</div>
