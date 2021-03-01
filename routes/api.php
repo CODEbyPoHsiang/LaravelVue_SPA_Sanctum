@@ -38,5 +38,8 @@ Route::get('/taipeiubikemap_full_match/{keywords}', 'UbikeMap@taipeiubikemap_ful
 
 //台中ubike相關
 Route::get('/taichungubikemap', 'UbikeMap@taichungubikemap');
+Route::get('/taichungibikemap', 'UbikeMap@taichungibikemap');
+//全部台中單車列表
+Route::get('/taichungallbikemap', 'UbikeMap@taichungallbikemap');
 Route::post('/taichungubikemap_search', 'UbikeMap@taichungubikemap_search');
 Route::get('/taichungubikemap_full_match/{keywords}', 'UbikeMap@taichungubikemap_full_match');

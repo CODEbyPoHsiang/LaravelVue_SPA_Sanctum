@@ -171,7 +171,6 @@ export default {
         L.marker([bike.lat, bike.lng])
           .bindPopup(
             `<p><strong style="font-size: 20px;">${bike.sna}&nbsp
-              <button type="button" class="btn btn-info btn-sm ">加入常用</button>
 
             </strong></p>
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${bike.sbi} 台</strong><br>
@@ -235,7 +234,6 @@ export default {
           .addTo(this.OSMap)
           .bindPopup(
             `<p><strong style="font-size: 20px;">${response.data[0].sna}&nbsp
-              <button type="button" class="btn btn-info btn-sm ">加入常用</button>
 
             </strong></p>
 
@@ -254,7 +252,7 @@ export default {
   },
   created() {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
-    axios.get("api/taichungubikemap").then((response) => {
+    axios.get("api/taichungallbikemap").then((response) => {
       console.log(response.data);
       this.ubikes = Object.keys(response.data.retVal).map(
         (key) => response.data.retVal[key]

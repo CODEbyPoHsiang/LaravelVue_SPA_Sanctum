@@ -178,10 +178,6 @@ export default {
         L.marker([bike.lat, bike.lng])
           .bindPopup(
             `<p><strong style="font-size: 20px;">${bike.sna}&nbsp
-              <button type="button" 
-              class="btn btn-info btn-sm "
-             
-              >加入常用</button>
               </strong></p>
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${bike.sbi} 台</strong><br>
             可停空位剩餘: ${bike.bemp}
@@ -263,10 +259,6 @@ export default {
           .addTo(this.OSMap)
           .bindPopup(
             `<p><strong style="font-size: 20px;">${response.data[0].sna}&nbsp
-             <button type="button" class="btn 
-             btn-info btn-sm
-                           @click="addToList(response.data[0].sno)"
-                           >加入常用</button>
             </strong></p>
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${response.data[0].sbi} 台</strong><br>
             可停空位剩餘: ${response.data[0].bemp}

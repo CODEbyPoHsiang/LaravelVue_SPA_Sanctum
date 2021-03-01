@@ -65,5 +65,186 @@
     "latitude": 24.17173,
     "longitude":120.68526,
     "zipCode": 100
-  }]
+  },
+  {
+    "sort": 9,
+    "id": 9,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "411",
+    "name": "太平區",
+    "AreaEngName": "Taiping Dist."
+},
+{"sort": 10,
+  "id": 10,
+  "latitude": 24.17173,
+  "longitude":120.68526,
+    "ZipCode": "412",
+    "name": "大里區",
+    "AreaEngName": "Dali Dist."
+},
+{
+  "sort": 11,
+    "id": 11,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "413",
+    "name": "霧峰區",
+    "AreaEngName": "Wufeng Dist."
+},
+{
+  "sort": 12,
+    "id": 12,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "414",
+    "name": "烏日區",
+    "AreaEngName": "Wuri Dist."
+},
+{
+  "sort": 13,
+    "id": 13,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "420",
+    "name": "豐原區",
+    "AreaEngName": "Fengyuan Dist."
+},
+{
+  "sort": 14,
+    "id": 14,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "421",
+    "name": "后里區",
+    "AreaEngName": "Houli Dist."
+},
+{
+  "sort": 15,
+    "id": 15,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "422",
+    "name": "石岡區",
+    "AreaEngName": "Shigang Dist."
+},
+{
+  "sort": 16,
+    "id": 16,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "423",
+    "name": "東勢區",
+    "AreaEngName": "Dongshi Dist."
+},
+{
+  "sort": 17,
+    "id": 17,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "424",
+    "name": "和平區",
+    "AreaEngName": "Heping Dist."
+},
+{
+  "sort": 18,
+    "id": 18,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "426",
+    "name": "新社區",
+    "AreaEngName": "Xinshe Dist."
+},
+{
+  "sort": 19,
+    "id": 19,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "427",
+    "name": "潭子區",
+    "AreaEngName": "Tanzi Dist."
+},
+{
+  "sort": 20,
+    "id": 20,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "428",
+    "name": "大雅區",
+    "AreaEngName": "Daya Dist."
+},
+{
+  "sort": 21,
+    "id": 21,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "429",
+    "name": "神岡區",
+    "AreaEngName": "Shengang Dist."
+},
+{
+  "sort": 22,
+    "id": 22,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "432",
+    "name": "大肚區",
+    "AreaEngName": "Dadu Dist."
+},
+{
+  "sort": 23,
+    "id": 23,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "433",
+    "AreaName": "沙鹿區",
+    "AreaEngName": "Shalu Dist."
+},
+{
+  "sort": 24,
+    "id": 24,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "434",
+    "name": "龍井區",
+    "AreaEngName": "Longjing Dist."
+},
+{
+  "sort": 25,
+    "id": 25,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "435",
+    "name": "梧棲區",
+    "AreaEngName": "Wuqi Dist."
+},
+{
+  "sort": 26,
+    "id": 26,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "436",
+    "name": "清水區",
+    "AreaEngName": "Qingshui Dist."
+},
+{
+  "sort": 27,
+    "id": 27,
+    "latitude": 24.17173,
+    "longitude":120.68526,
+    "ZipCode": "437",
+    "name": "大甲區",
+    "AreaEngName": "Dajia Dist."
+},
+{
+    "ZipCode": "438",
+    "name": "外埔區",
+    "AreaEngName": "Waipu Dist."
+},
+{
+    "ZipCode": "439",
+    "name": "大安區",
+    "AreaEngName": "Da’an Dist."
+}
+]
 }]
