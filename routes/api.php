@@ -28,6 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+
+Route::get('/csv', 'UbikeMap@csv');
+
+
+
 //台北ubike相關
 Route::get('/taipeiubikemap', 'UbikeMap@taipeiubikemap');
 //畫面上搜尋的api

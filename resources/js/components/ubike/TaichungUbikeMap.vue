@@ -11,7 +11,7 @@
             <div>
               <!-- 即時站點資料 -->
               <router-link
-                to="/taipeimapnow"
+                to="/taichungmapnow"
                 type="button"
                 class="btn btn-sm btn-warning navbar-right"
                 >即時站點資料</router-link

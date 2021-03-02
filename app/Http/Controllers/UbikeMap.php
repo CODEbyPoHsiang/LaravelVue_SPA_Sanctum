@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class UbikeMap extends Controller
 {
+    public function csv(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get("https://datacenter.taichung.gov.tw/swagger/OpenData/edfc90e4-a71b-4193-8b2c-aefcc79c6549");
+        $response = $request->getBody()->getContents();
+
+        return response($response);
+    }
     public function taipeiubikemap(Request $request)
     {
         $curl = curl_init();
