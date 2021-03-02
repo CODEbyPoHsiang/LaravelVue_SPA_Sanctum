@@ -9,6 +9,7 @@ window._ = require("lodash");
 try {
     window.Popper = require("popper.js").default;
     window.$ = window.jQuery = require("jquery");
+   
 
     require("bootstrap");
 } catch (e) {}
@@ -27,6 +28,7 @@ window.axios.defaults.headers.common["Authorization"] =
     "Bearer " + sessionStorage.getItem("token");
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = process.env.MIX_BASE_SANCTUM_URL;
+
 
 // //防止手動修改storage 內容
 // window.addEventListener('storage', (e) => {

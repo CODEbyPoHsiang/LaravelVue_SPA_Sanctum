@@ -42,4 +42,8 @@ Route::get('/taichungibikemap', 'UbikeMap@taichungibikemap');
 //全部台中單車列表
 Route::get('/taichungallbikemap', 'UbikeMap@taichungallbikemap');
 Route::post('/taichungubikemap_search', 'UbikeMap@taichungubikemap_search');
+//全部臺中單車搜尋
+Route::post('/taichungallbikemap_search', 'UbikeMap@taichungallbikemap_search');
 Route::get('/taichungubikemap_full_match/{keywords}', 'UbikeMap@taichungubikemap_full_match');
+//點擊搜尋後觸發的api
+Route::get('/taichungallbikemap_full_match/{keywords}', 'UbikeMap@taichungallbikemap_full_match');

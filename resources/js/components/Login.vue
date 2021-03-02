@@ -4,8 +4,6 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">登入</div>
-
-          <div class="card-body">component 名稱：login.vue 這裡是登入頁</div>
           <div class="card-body">
             <center>
               <form>

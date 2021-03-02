@@ -6,9 +6,9 @@
           <div class="card-header">OTP</div>
 
           <div class="card-body">
-            component 名稱：OTP
             <center>
               <div>請輸入OTP 六位數字</div>
+              <br/>
               <input
                 type="text"
                 v-model="one_time_password"
@@ -22,14 +22,14 @@
             <button
               type="button"
               @click="cancel"
-              class="btn btn-danger pull-right"
+              class="btn btn-danger "
             >
               取消
             </button>
             <button
               type="button"
               @click="otpchk"
-              class="btn btn-primary"
+              class="btn btn-primary pull-right"
             >
               確認
             </button>

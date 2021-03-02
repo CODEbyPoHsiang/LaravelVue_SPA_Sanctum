@@ -130,6 +130,25 @@
 <script>
 import L from "leaflet"; // OSM不像是google map可以直接標記點位，需要其他套件
 import cityName from "./assets/city2Name.json";
+
+//建立圖標顏色
+var blueIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var redIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 export default {
   name: "App",
   data: () => ({
@@ -158,7 +177,9 @@ export default {
     },
   },
   methods: {
+   
     updateMap() {
+      
       // remove markers
       this.OSMap.eachLayer((layer) => {
         // 移除先前查詢的標記，避免重複顯示
@@ -168,9 +189,19 @@ export default {
       });
       // add markers
       this.youbikes.forEach((bike) => {
-        L.marker([bike.lat, bike.lng])
+
+        //座標顏色變化判斷
+          var mapIcon;
+          if(parseInt(bike.sbi) < 5){
+            mapIcon = redIcon;
+          }else{
+             mapIcon = blueIcon;
+          }
+
+       const marker = L.marker([bike.lat, bike.lng],{icon:mapIcon})
           .bindPopup(
             `<p><strong style="font-size: 20px;">${bike.sna}&nbsp
+        
 
             </strong></p>
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${bike.sbi} 台</strong><br>
@@ -186,6 +217,11 @@ export default {
           )
           .addTo(this.OSMap); // 新增標記到地圖
       });
+
+//      $(document).on("click","#myBtn",function() {
+//        alert("案到了");
+// });
+
       // move to new center
       this.cityName[0].districts.find((dist) => {
         if (dist.name === this.select.dist) {
@@ -197,11 +233,14 @@ export default {
     },
     search() {
       axios
-        .post("/api/taichungubikemap_search", {
+        .post("/api/taichungallbikemap_search", {
           keywords: this.keywords,
         })
         .then((response) => {
+
           this.search_datas = response.data;
+          // var parsedobj = JSON.parse(JSON.stringify(response.data))
+          // console.log(parsedobj)
           console.log(response.data);
           // const sarea = response.data[0].sarea;
           //  this.response.data[0].find((dist) => {
@@ -225,18 +264,25 @@ export default {
           this.OSMap.removeLayer(layer);
         }
       });
-      axios.get(`api/taichungubikemap_full_match/${sno}`).then((response) => {
+      axios.get(`api/taichungallbikemap_full_match/${sno}`).then((response) => {
         console.log(response.data);
         this.OSMap.flyTo(
           new L.LatLng(response.data[0].lat, response.data[0].lng, 14)
         ); // 飛越效果，數字為過程中縮放級數
-        L.marker([response.data[0].lat, response.data[0].lng])
+        //座標顏色變化判斷
+          var mapIcon;
+          if(parseInt(response.data[0].sbi) < 5){
+            mapIcon = redIcon;
+          }else{
+             mapIcon = blueIcon;
+          }
+
+        L.marker([response.data[0].lat, response.data[0].lng],{icon:mapIcon})
           .addTo(this.OSMap)
           .bindPopup(
             `<p><strong style="font-size: 20px;">${response.data[0].sna}&nbsp
-
             </strong></p>
-
+            
             <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${response.data[0].sbi} 台</strong><br>
             可停空位剩餘: ${response.data[0].bemp}
 

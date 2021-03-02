@@ -4,10 +4,15 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">QRcode</div>
+          <br />
           <center>
-            //qr_code取出時是html標籤要把他利用v-html綁定
+            <!-- qr_code取出時是html標籤要把他利用v-html綁定 -->
+                        <div>請掃描QRcode</div>
+                      <br />
+
             <div v-html="qrcode"></div>
-            <div class="card-body">component 名稱：home.vue 這裡是QRcode</div>
+                      <br />
+
             <div>請輸入OTP 六位數字</div>
             <div class="card-body">
               <input
@@ -21,7 +26,7 @@
           <div class="card-footer">
             <button 
               type="submit" 
-              class="btn btn-primary"               
+              class="btn btn-primary pull-right"               
               @click="otpchk"
               >
                 確認
@@ -29,7 +34,7 @@
             <button
               type="button"
               @click="cancel"
-              class="btn btn-danger pull-right"
+              class="btn btn-danger "
             >
               取消
             </button>

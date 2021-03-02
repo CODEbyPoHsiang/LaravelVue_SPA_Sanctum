@@ -5,7 +5,6 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">註冊</div>
-          <div class="card-body">component 名稱：register.vue 這裡註冊頁</div>
           <div class="card-body">
              <center>
             <form> 
@@ -33,7 +32,7 @@
       </div>
 
      <div>
-        <label>確認密碼</label>
+        <label>確認密碼</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         <input type="password" v-model="password_confirmation" />
         <span v-if="errors.password_confirmation">
           {{ errors.password_confirmation[0] }}
