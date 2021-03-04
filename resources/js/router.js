@@ -20,8 +20,8 @@ import Register from "./components/Register.vue";
 import AllProduct from "./components/products/AllProduct.vue";
 import EditProduct from "./components/products/EditProduct.vue";
 import CreateProduct from "./components/products/CreateProduct.vue";
-import QRcode from "./components/2fa_login/QRcode.vue";
-import otp2fa from "./components/2fa_login/otp2fa.vue";
+// import QRcode from "./components/2fa_login/QRcode.vue";
+// import otp2fa from "./components/2fa_login/otp2fa.vue";
 import TaipeiUbikeMap from "./components/ubike/TaipeiUbikeMap.vue";
 import TaichungUbikeMap from "./components/ubike/TaichungUbikeMap.vue";
 import TaipeiUbikeMapNow from "./components/ubike/TaipeiUbikeMapNow.vue";
@@ -76,18 +76,18 @@ const router = new VueRouter({
             component: CreateProduct,
             meta: { authOnly: true }
         },
-        {
-            path: "/qrcode",
-            name: "qrcode",
-            component: QRcode,
-            meta: { authOnly: true }
-        },
-        {
-            path: "/otp2fa",
-            name: "otp2fa",
-            component: otp2fa,
-            meta: { authOnly: true }
-        },
+        // {
+        //     path: "/qrcode",
+        //     name: "qrcode",
+        //     component: QRcode,
+        //     meta: { authOnly: true }
+        // },
+        // {
+        //     path: "/otp2fa",
+        //     name: "otp2fa",
+        //     component: otp2fa,
+        //     meta: { authOnly: true }
+        // },
         {
             path: "/taipeimap",
             name: "taipeimap",

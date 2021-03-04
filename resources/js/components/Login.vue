@@ -2,7 +2,9 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <div class="card">
+
+        <!-- Login的components  start-->
+        <div class="card" v-if="first_login=== 'true'">
           <div class="card-header">登入</div>
           <div class="card-body">
             <center>
@@ -31,6 +33,84 @@
             </center>
           </div>
         </div>
+        <!-- Login的components  end-->
+
+        <!-- OTP的components  start-->
+        <div class="card" v-if="otp">
+          <div class="card-header">OTP</div>
+
+          <div class="card-body">
+            <center>
+              <div>請輸入OTP 六位數字</div>
+              <br/>
+              <input
+                type="text"
+                v-model="one_time_password"
+                maxlength="6"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+              />
+            </center>
+          </div>
+
+          <div class="card-footer">
+            <button
+              type="button"
+              @click="cancel"
+              class="btn btn-danger "
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              @click="otpchk"
+              class="btn btn-primary pull-right"
+            >
+              確認
+            </button>
+          </div>
+        </div>
+        <!-- OTP的components  end-->
+
+        <div class="card" v-if="getcode">
+          <div class="card-header">QRcode</div>
+          <br />
+          <center>
+            <!-- qr_code取出時是html標籤要把他利用v-html綁定 -->
+                        <div>請掃描QRcode</div>
+                      <br />
+
+            <div v-html="qrcode"></div>
+                      <br />
+
+            <div>請輸入OTP 六位數字</div>
+            <div class="card-body">
+              <input
+                type="text"
+                maxlength="6"
+                v-model="one_time_password"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+              />
+            </div>
+          </center>
+          <div class="card-footer">
+            <button 
+              type="submit" 
+              class="btn btn-primary pull-right"               
+              @click="otpchk"
+              >
+                確認
+              </button>
+            <button
+              type="button"
+              @click="cancel"
+              class="btn btn-danger "
+            >
+              取消
+            </button>
+          </div>
+        </div>
+
+      </div>
       </div>
     </div>
   </div>
@@ -43,6 +123,10 @@ export default {
       email: "",
       password: "",
       errors: [],
+      otp:"",
+      first_login:"",
+      getcode:""
+      
     };
   },
   methods: {
@@ -56,9 +140,12 @@ export default {
           })
           .then((response) => {
             console.log(response);
-
             switch (response.data.success) {
+                          
+
               case "getcode":
+                this.getcode = "true";
+                this.first_login = "false";
                 sessionStorage.setItem("qrcode", response.data.QR_code);
                 // localStorage.setItem("email", response.data.email);
                 sessionStorage.setItem("first_login", "true");
@@ -73,6 +160,8 @@ export default {
                 this.$router.push("/qrcode");
                 break;
               case "toConfirmTwoFa":
+                this.otp = "true";
+                this.first_login = "false";
                 sessionStorage.setItem("first_login", "true");
                 sessionStorage.setItem("otp2fa", "true");
                 sessionStorage.setItem("email", response.data.email);
@@ -82,7 +171,7 @@ export default {
                 );
                 // document.cookie = `token = ${response.data.token}`;
                 // this.$emit("singin", "true");
-                this.$router.push("/otp2fa");
+                // this.$router.push("/otp2fa");
                 break;
               case false:
                 alert(response.data.message);
@@ -117,6 +206,34 @@ export default {
           });
       // });
     },
+     otpchk(e) {
+      e.preventDefault();
+      axios
+          .post("/api/google2fa_login", {
+           google2fa_secret: sessionStorage.getItem('google2fa_secret'),
+           email: sessionStorage.getItem('email'),
+           one_time_password: this.one_time_password,
+          }).then((response) => {
+            console.log(response);
+            switch (response.data.success) {
+              case true:
+                sessionStorage.setItem("token", response.data.login_token);
+                sessionStorage.setItem("auth", "true");
+
+                //emit 改變父層navbar元件
+                this.$emit("singin", "true");
+
+                this.$router.push("/userabout");
+                break;
+              case false:
+                alert(response.data.message)
+                break;
+              case "optempty":
+                alert(response.data.message)
+                break;
+            }
+      });
+     },
     logout() {
       axios
         .post("api/logout")
@@ -134,6 +251,7 @@ export default {
     },
   },
   mounted() {
+    this.first_login = "true";
     console.log("這是login.vue");
   },
 };
