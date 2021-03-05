@@ -6,6 +6,11 @@ import Vue from "vue";
 import router from "./router";
 import App from './App.vue';
 
+
+//游標focus套件
+import autofocus from 'vue-autofocus-directive';
+Vue.directive('autofocus', autofocus);
+
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 

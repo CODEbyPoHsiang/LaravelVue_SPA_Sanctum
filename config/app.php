@@ -161,6 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Recca0120\Terminal\TerminalServiceProvider::class,
+
 
         /*
          * Package Service Providers...

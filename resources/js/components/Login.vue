@@ -11,7 +11,7 @@
               <form>
                 <div>
                   <label>信箱</label>
-                  <input type="text" v-model="email" />
+                  <input type="text" v-model="email" v-autofocus/>
                   <span v-if="errors.email">
                     {{ errors.email[0] }}
                   </span>
@@ -36,7 +36,7 @@
         <!-- Login的components  end-->
 
         <!-- OTP的components  start-->
-        <div class="card" v-if="otp">
+        <div class="card" v-if="otp==='true'">
           <div class="card-header">OTP</div>
 
           <div class="card-body">
@@ -47,6 +47,7 @@
                 type="text"
                 v-model="one_time_password"
                 maxlength="6"
+                v-autofocus
                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
               />
             </center>
@@ -71,7 +72,7 @@
         </div>
         <!-- OTP的components  end-->
 
-        <div class="card" v-if="getcode">
+        <div class="card" v-if="getcode==='true'">
           <div class="card-header">QRcode</div>
           <br />
           <center>
@@ -87,6 +88,7 @@
               <input
                 type="text"
                 maxlength="6"
+                v-autofocus
                 v-model="one_time_password"
                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
               />
@@ -125,7 +127,10 @@ export default {
       errors: [],
       otp:"",
       first_login:"",
-      getcode:""
+      getcode:"",
+      qrcode:"",
+            google2fa_secret: "",
+      one_time_password: "",
       
     };
   },
@@ -142,11 +147,10 @@ export default {
             console.log(response);
             switch (response.data.success) {
                           
-
               case "getcode":
                 this.getcode = "true";
                 this.first_login = "false";
-                sessionStorage.setItem("qrcode", response.data.QR_code);
+                // sessionStorage.setItem("qrcode", response.data.QR_code);
                 // localStorage.setItem("email", response.data.email);
                 sessionStorage.setItem("first_login", "true");
                 sessionStorage.setItem("qrcode_scan", "true");
@@ -157,7 +161,8 @@ export default {
                 );
                 // document.cookie = `token = ${response.data.token}`;
                 // this.$emit("singin", "true");
-                this.$router.push("/qrcode");
+                // this.$router.push("/qrcode");
+                this.qrcode=response.data.QR_code;
                 break;
               case "toConfirmTwoFa":
                 this.otp = "true";
@@ -177,7 +182,6 @@ export default {
                 alert(response.data.message);
                 break;
             }
-
             // if (response.data.success === "getcode") {
             //   localStorage.setItem("qrcode", response.data.QR_code);
             //   // localStorage.setItem("email", response.data.email);
@@ -219,10 +223,8 @@ export default {
               case true:
                 sessionStorage.setItem("token", response.data.login_token);
                 sessionStorage.setItem("auth", "true");
-
                 //emit 改變父層navbar元件
                 this.$emit("singin", "true");
-
                 this.$router.push("/userabout");
                 break;
               case false:
@@ -248,6 +250,18 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    cancel() {
+      // localStorage.removeItem("qrcode");
+      // localStorage.removeItem("qrcode_scan");
+      // localStorage.removeItem("first_login");
+      // localStorage.removeItem("google2fa_secret");
+      // localStorage.removeItem("email");
+      sessionStorage.clear();
+      this.getcode = "false";
+      this.otp = "false";
+      this.first_login = "true";
+      this.$router.push("/login");
     },
   },
   mounted() {

@@ -118,35 +118,36 @@ const router = new VueRouter({
 function isLoggedIn() {
     return sessionStorage.getItem("first_login");
 }
-function QRcodeScan() {
-    return sessionStorage.getItem("qrcode_scan");
-}
-function OTP2fa() {
-    return sessionStorage.getItem("otp2fa");
-}
-function Checklogin2FA() {
-    return sessionStorage.getItem("auth");
-}
+// function QRcodeScan() {
+//     return sessionStorage.getItem("qrcode_scan");
+// }
+// function OTP2fa() {
+//     return sessionStorage.getItem("otp2fa");
+// }
+// function Checklogin2FA() {
+//     return sessionStorage.getItem("auth");
+// }
 
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.authOnly)) {
-        if (!isLoggedIn()) {
-            next("/login");
-        } else {
-            next();
-        }
-    } else if (to.matched.some(record => record.meta.guestOnly)) {
-        if (QRcodeScan()) {
-            next("/qrcode");
-        } else if(OTP2fa()){
-            next("/otp2fa");
-        }else {
-            next();
-        }
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     // if (to.matched.some(record => record.meta.authOnly)) {
+//     //     if (!isLoggedIn()) {
+//     //         next("/login");
+//     //     } else {
+//     //         next();
+//     //     }
+//     // } else if (to.matched.some(record => record.meta.guestOnly)) {
+//     //     if (QRcodeScan()) {
+//     //         next("/qrcode");
+//     //     } else if(OTP2fa()){
+//     //         next("/otp2fa");
+//     //     }else {
+//     //         next();
+//     //     }
+//     // } 
+//     else {
+//         next();
+//     }
+// });
 
 
 export default router;

@@ -27,6 +27,7 @@
     "dependencies": {
         "js-cookie": "^2.2.1",
         "leaflet": "^1.7.1",
+        "vue-autofocus-directive": "^1.0.4",
         "vue-router": "^3.5.1",
         "vue2-leaflet": "^2.6.0",
         "vuejs-autocomplete": "^0.1.1"
