@@ -124,30 +124,29 @@ function isLoggedIn() {
 // function OTP2fa() {
 //     return sessionStorage.getItem("otp2fa");
 // }
-// function Checklogin2FA() {
-//     return sessionStorage.getItem("auth");
-// }
+function Checklogin2FA() {
+    return sessionStorage.getItem("auth");
+}
 
-// router.beforeEach((to, from, next) => {
-//     // if (to.matched.some(record => record.meta.authOnly)) {
-//     //     if (!isLoggedIn()) {
-//     //         next("/login");
-//     //     } else {
-//     //         next();
-//     //     }
-//     // } else if (to.matched.some(record => record.meta.guestOnly)) {
-//     //     if (QRcodeScan()) {
-//     //         next("/qrcode");
-//     //     } else if(OTP2fa()){
-//     //         next("/otp2fa");
-//     //     }else {
-//     //         next();
-//     //     }
-//     // } 
-//     else {
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.authOnly)) {
+        if (!Checklogin2FA()) {
+            next("/login");
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.guestOnly)) {
+        if (Checklogin2FA()) {
+            next("/userabout");
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+
 
 
 export default router;

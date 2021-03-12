@@ -4,7 +4,6 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">建立產品</div>
-          <div class="card-body">component 名稱： CreateProduct.vue</div>
           <div class="card-body">
             <center>
               <form @submit.prevent="addProduct">

@@ -259,7 +259,8 @@ class UbikeMap extends Controller
         foreach ($ibike_data_arr as $v) {
             $ibike_data_json[]= [
                 'sna' => $v["Position"],
-                "sarea" => $v["CArea"],
+                // "sarea" => $v["CArea"],
+                "sarea" => str_replace("臺中市", "", $v["CArea"]),
                 "ar" => $v["CAddress"],
                 "snaen" => $v["EName"],
                 "sareaen" => $v["EArea"],

@@ -299,11 +299,11 @@ export default {
   created() {
     // const url = 'http://10.249.33.229/~po-hsiang/LaravelVue_SPA_Sanctum/public/api/taipeiubikemap';
     axios.get("api/taichungallbikemap").then((response) => {
-      console.log(response.data);
       this.ubikes = Object.keys(response.data.retVal).map(
         (key) => response.data.retVal[key]
       );
     });
+    
   },
   mounted() {
     // initalize

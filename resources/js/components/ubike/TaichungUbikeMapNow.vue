@@ -78,7 +78,7 @@ export default {
   methods: {
     search() {
       axios
-        .post("/api/taichungubikemap_search", {
+        .post("/api/taichungallbikemap_search", {
           keywords: this.keywords,
         })
 

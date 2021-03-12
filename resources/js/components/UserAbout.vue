@@ -4,7 +4,6 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">使用者資料</div>
-          <div class="card-body">component 名稱：about.vue </div>
           <div class="card-body">
             <div>
     <p>使用者名稱：{{ user.name }}</p>

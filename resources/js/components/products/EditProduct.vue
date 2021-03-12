@@ -5,7 +5,6 @@
         <div class="card">
           <div class="card-header">編輯產品</div>
 
-          <div class="card-body">component 名稱：EditProduct.vue</div>
           <div class="card-body">
             <center>
               <form @submit.prevent="updateProduct">

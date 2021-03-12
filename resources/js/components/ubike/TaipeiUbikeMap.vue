@@ -281,7 +281,7 @@ export default {
         ); // 飛越效果，數字為過程中縮放級數
         //座標顏色變化判斷
           var mapIcon;
-          if(parseInt(bike.sbi) < 5){
+          if(parseInt(response.data[0].sbi) < 5){
             mapIcon = redIcon;
           }else{
              mapIcon = blueIcon;

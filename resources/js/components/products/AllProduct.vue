@@ -12,13 +12,22 @@
             重新整理
           </button>
         </center>
+        <br/>
 
         <div class="card">
-          <div class="card-header">產品清單</div>
+          <div class="card-header">產品清單
+             <router-link
+                        :to="{
+                          path: '/createproduct',
+                         
+                        }"
+                        class="btn btn-success pull-right"
+                        >新增</router-link
+                      >
 
-          <div class="card-body">
-            component 名稱：AllProduct.vue 這裡是產品清單
           </div>
+
+    
           <div class="card-body">
             <table class="table table-bordered">
               <thead>

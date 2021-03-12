@@ -1,8 +1,8 @@
 <template>
   <div class="vue-tempalte">
     <div class="text-center" style="margin: 20px 0px 20px 0px">
-      <span class="text-secondary"
-        >Laravel SPA with Vue , Auth (Sanctum), CURD Example</span
+      <span class="text-white"
+        ><h3>Laravel SPA with Vue (Sanctum) CURD</h3> </span
       >
     </div>
 
@@ -12,9 +12,6 @@
         <div class="navbar-nav" v-if="isLoggedIn === 'true'">
           <router-link to="/allproduct" class="nav-item nav-link"
             >產品清單</router-link
-          >
-          <router-link to="/createproduct" class="nav-item nav-link"
-            >建立產品</router-link
           >
           <router-link to="/userabout" class="nav-item nav-link"
             >使用者資料</router-link
