@@ -237,7 +237,7 @@ export default {
           keywords: this.keywords,
         })
         .then((response) => {
-
+sessionStorage.setItem('arr', JSON.stringify(response.data));
           this.search_datas = response.data;
           // var parsedobj = JSON.parse(JSON.stringify(response.data))
           // console.log(parsedobj)
@@ -255,7 +255,7 @@ export default {
           }
         });
     },
-    mapInfo(sno) {
+    mapInfo_old(sno) { //舊方法取得列表後再把id回去摳一次api取得單一資料
       //因為清單是列表，若點了要在點下一個要先清除
       // remove markers
       this.OSMap.eachLayer((layer) => {
@@ -294,6 +294,46 @@ export default {
           )
           .openPopup(); // 新增標記到地圖
       });
+    },
+    mapInfo(sno) { //此方法是先取得列表後把資料存在storage再從storage取資料
+      //因為清單是列表，若點了要在點下一個要先清除
+      // remove markers
+      this.OSMap.eachLayer((layer) => {
+        // 移除先前查詢的標記，避免重複顯示
+        if (layer instanceof L.Marker) {
+          this.OSMap.removeLayer(layer);
+        }
+      });
+      const search_list = JSON.parse(sessionStorage.getItem('arr'));
+      console.log(search_list[`${sno}`]);
+
+        this.OSMap.flyTo(
+          new L.LatLng(search_list[`${sno}`].lat, search_list[`${sno}`].lng, 14)
+        ); // 飛越效果，數字為過程中縮放級數
+        //座標顏色變化判斷
+          var mapIcon;
+          if(parseInt(search_list[`${sno}`].sbi) < 5){
+            mapIcon = redIcon;
+          }else{
+             mapIcon = blueIcon;
+          }
+
+        L.marker([search_list[`${sno}`].lat, search_list[`${sno}`].lng],{icon:mapIcon})
+          .addTo(this.OSMap)
+          .bindPopup(
+            `<p><strong style="font-size: 20px;">${search_list[`${sno}`].sna}&nbsp
+            </strong></p>
+            
+            <strong style="font-size: 16px; color: #d45345;">可租借車輛剩餘：${search_list[`${sno}`].sbi} 台</strong><br>
+            可停空位剩餘: ${search_list[`${sno}`].bemp}
+
+            <br>
+            <br>
+            <small>
+            最後更新時間: ${search_list.mday}
+            </small>`
+          )
+          .openPopup(); // 新增標記到地圖
     },
   },
   created() {
